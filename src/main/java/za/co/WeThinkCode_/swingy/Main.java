@@ -3,15 +3,9 @@
 //---------------------------------------
 
 //research
-// Respect the Model-View-Controller design pattern.
-// Automated build with Maven.
 // Annotation based user input validation
-// Builder pattern
-// Hibernate Validator
-// Mavin plugin in ide
-// java package naming conventions
 // javax.validation specification
-// relational database in java
+// sql lite
 
 //----------------------------------------
 
@@ -35,3 +29,29 @@
 // formular for leveling up level*1000+(level − 1)2*450
 // must be run as java -jar swingy.jar console, java -jar swingy.jar gui
 // save data in a relational database
+// respect mvc patterns
+
+//1 Main that can handle the actual execution of the command and flags
+//2 Setup all of your classes, i.e all hero, enemy and items
+//3 start setting up your logic controller
+//4 build the consol view
+//5 build the interface
+//6 add logic to all classes and controllers for the more advanced stuff the game needs to do
+//7 add saving and loading characters
+//8 build the gui view
+//9 drink a fat beer
+package za.co.WeThinkCode_.swingy;
+
+public class Main {
+
+    public static void main(String[] args) {
+        if (args.length == 1) {
+            if (args[0].equals("-gui") || args[0].equals("-console"))
+                System.out.println(args[0]);
+            else
+                System.out.println("check that you spelt -gui or -console right and using the dash");
+        } else {
+            System.out.println("You need to tell me via flag if you'd like a console view of the game or a gui view");
+        }
+    }
+}

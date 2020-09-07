@@ -42,12 +42,16 @@
 //9 drink a fat beer
 package za.co.WeThinkCode_.swingy;
 
+import za.co.WeThinkCode_.swingy.model.Var;
+
 public class Main {
 
     public static void main(String[] args) {
         if (args.length == 1) {
-            if (args[0].equals("-gui") || args[0].equals("-console"))
+            if (args[0].equals("-gui") || args[0].equals("-console")) {
                 System.out.println(args[0]);
+                System.out.println(Var.Items.Armour[1]);
+            }
             else
                 System.out.println("check that you spelt -gui or -console right and using the dash");
         } else {

@@ -1,11 +1,13 @@
 package control;
 
-import za.co.WeThinkCode_.swingy.model;
+import za.co.WeThinkCode_.swingy.model.Var;
 
-class Stats{
+@Getter
+@Setter
+public class Stats{
     private Characters stats;
 
-    class AssasinStats{
+    public class AssasinStats{
         stats.Hp = 100;
         stats.Atk = 50;
         stats.Def = 50;
@@ -15,7 +17,7 @@ class Stats{
         stats.Weapon = 0;
     }
 
-    class TankStats{
+    public class TankStats{
         stats.Hp = 100;
         stats.Atk = 30;
         stats.Def = 70;
@@ -25,7 +27,7 @@ class Stats{
         stats.Weapon = 0;
     }
 
-    class NecromancerStats{
+    public class NecromancerStats{
         stats.Hp = 100;
         stats.Atk = 70;
         stats.Def = 30;
@@ -35,7 +37,7 @@ class Stats{
         stats.Weapon = 0;
     }
 
-    class ArcherStats{
+    public class ArcherStats{
         stats.Hp = 100;
         stats.Atk = 50;
         stats.Def = 30;
@@ -45,7 +47,7 @@ class Stats{
         stats.Weapon = 0;
     }
 
-    class EnemyStats{
+    public class EnemyStats{
         stats.Hp = 100;
         stats.Atk = 30;
         stats.Def = 30;

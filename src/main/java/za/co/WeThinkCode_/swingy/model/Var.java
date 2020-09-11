@@ -1,46 +1,81 @@
-package model;
+package main.java.za.co.WeThinkCode_.swingy.model;
 
-class Var{
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
-    class Characters{
-        private String Assasin; //equal defence and attack and dodge
-        private String Tank; //more defence
-        private String Necromancer; //more Attack
-        private String Archer; //higher chance to dodge
-        private String Enemy;
-        private String ClassName;
-        private String Player;
-        private String Atk;
-        private String Def;
-        private String Hp;
-        private String Dmg;
-        private String Dodge;
-        private String Artifects;
-        private ArrayList<String> Helm = new ArrayList<String>();
-        private ArrayList<String> Armour = new ArrayList<String>();
-        private ArrayList<String> Weapon = new ArrayList<String>();
-        private String Exp;
-        private String Level;
-        private String Fight;
-        private String Run;
-        private String Keep;
-        private String Leave;
-    }
+@Getter
+@Setter
+@NonNull
+@Builder
+public class Var{
 
-    class Directions {
-        private String North;
-        private String West;
-        private String East;
-        private String South;
-        private String[][] StartPos;
-    }
+   protected String Assassin; //equal defence and attack and dodge
+   protected String Tank; //more defence
+   protected String Necromancer; //more Attack
+   protected String Archer; //higher chance to dodge
+   protected String Enemy;
+   protected String ClassName;
+   protected String Player;
+   protected int Atk;
+   protected int Def;
+   protected int Dmg;
+   protected int Dodge;
+   protected String Artifacts;
 
-    class Items{
-         Armour.add("Breastplate of Hellish Punishment","Tunic of Condemned Hell","Rugged Leather Garments","Vestment of Cursed Might","Defender of Sunlight");
+   @Builder.Default protected int Hp = 100;
+   @Builder.Default protected String Helm = "Leather";
+   @Builder.Default protected String Armor = "Leather";
+   @Builder.Default protected String Weapon = "Leather";
+   @Builder.Default protected int Exp = 0;
+   @Builder.Default protected int Level = 1;
+//   @Builder.Default protected int[] Coordinates = {0,0};
 
-         Helm.add("Faceguard of Divine Glory","Headcover of Sacred Freedom","Steel Helm of Burning Sorrow","Iron Jaws of Condemned Lands","Victor Golden Helmet");
+   protected boolean Fight;
+   protected boolean Run;
+   protected boolean Keep;
+   protected boolean Leave;
 
-        Weapon.add("Ash","Enigma","Defender Core","Loyal Chalice","Lich Trinket");
-    }
+
+   protected int North;
+   protected int West;
+   protected int East;
+   protected int South;
+
+   /*public Var(String Assassin, String Tank, String Necromancer, String Archer, String Enemy, String ClassName, String Player, int Atk, int Def, int Dmg, int Dodge, String Artifacts,
+           int Hp, String Helm, String Armor, String Weapon, int Exp, int Level,int[] Coordinates, boolean Fight, boolean Run, boolean Keep, boolean Leave, String North, String West,
+            String East, String South){
+
+      this.Assassin = Assassin;
+      this.Tank = Tank;
+      this.Necromancer = Necromancer;
+      this.Archer = Archer;
+      this.Enemy= Enemy;
+      this.ClassName = ClassName;
+      this.Player = Player;
+      this.Atk = Atk;
+      this.Def = Def;
+      this.Dmg = Dmg;
+      this.Dodge = Dodge;
+      this.Artifacts = Artifacts;
+      this.Hp = Hp;
+      this.Helm = Helm;
+      this.Armor = Armor;
+      this.Weapon = Weapon;
+      this.Exp = Exp;
+      this.Level = Level;
+      this.Coordinates = Coordinates;
+      this.Fight = Fight;
+      this.Run = Run;
+      this .Keep = Keep;
+      this.Leave = Leave;
+      this.North = North;
+      this.East = East;
+      this.West = West;
+      this.South = South;
+
+   }*/
+
 }
 

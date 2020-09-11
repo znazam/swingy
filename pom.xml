@@ -15,7 +15,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <version>1.18.12</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -87,7 +88,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>za.co.WeThinkCode_.swingy.Main</mainClass>
+                            <mainClass>main.java.za.co.WeThinkCode_.swingy.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

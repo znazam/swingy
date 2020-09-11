@@ -34,23 +34,25 @@
 //1 Main that can handle the actual execution of the command and flags
 //2 Setup all of your classes, i.e all hero, enemy and items
 //3 start setting up your logic controller
-//4 build the consol view
+//4 build the console view
 //5 build the interface
 //6 add logic to all classes and controllers for the more advanced stuff the game needs to do
 //7 add saving and loading characters
 //8 build the gui view
 //9 drink a fat beer
-package za.co.WeThinkCode_.swingy;
+package main.java.za.co.WeThinkCode_.swingy;
 
-import za.co.WeThinkCode_.swingy.model.Var;
+import main.java.za.co.WeThinkCode_.swingy.model.Var;
 
 public class Main {
 
     public static void main(String[] args) {
+
+        Var test = Var.builder().Player("something").build();
         if (args.length == 1) {
             if (args[0].equals("-gui") || args[0].equals("-console")) {
                 System.out.println(args[0]);
-                System.out.println(Var.Items.Armour[1]);
+                System.out.println(test.getArmor());
             }
             else
                 System.out.println("check that you spelt -gui or -console right and using the dash");

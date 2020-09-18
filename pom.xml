@@ -88,7 +88,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>main.java.za.co.WeThinkCode_.swingy.Main</mainClass>
+                            <mainClass>za.co.WeThinkCode_.swingy.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

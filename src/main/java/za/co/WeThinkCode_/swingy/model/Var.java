@@ -1,4 +1,4 @@
-package main.java.za.co.WeThinkCode_.swingy.model;
+package za.co.WeThinkCode_.swingy.model;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NonNull
+//@NonNull
 @Builder
 public class Var{
 
@@ -23,7 +23,10 @@ public class Var{
    protected int Dmg;
    protected int Dodge;
    protected String Artifacts;
+   protected String gameView;
 
+   @Builder.Default protected za.co.WeThinkCode_.swingy.control.Run.view gameStage = za.co.WeThinkCode_.swingy.control.Run.view.StartMenu;
+   @Builder.Default protected za.co.WeThinkCode_.swingy.control.Run.view lastStage = za.co.WeThinkCode_.swingy.control.Run.view.StartMenu;
    @Builder.Default protected int Hp = 100;
    @Builder.Default protected String Helm = "Leather";
    @Builder.Default protected String Armor = "Leather";

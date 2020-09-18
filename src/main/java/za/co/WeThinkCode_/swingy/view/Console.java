@@ -1,12 +1,17 @@
-package main.java.za.co.WeThinkCode_.swingy.view;
+package za.co.WeThinkCode_.swingy.view;
 
 
-import main.java.za.co.WeThinkCode_.swingy.model.screens;
+import lombok.Builder;
+import za.co.WeThinkCode_.swingy.control.Run;
+import za.co.WeThinkCode_.swingy.model.screens;
 
 import java.io.IOException;
+import java.util.Scanner;
 
-class console implements screens {
 
+public class Console implements screens {
+
+    Scanner scan = new Scanner(System.in);
     @Override
     public void StartMenu(){
 
@@ -27,6 +32,59 @@ class console implements screens {
                             "*           (1)New Game          (2)Load Game          (3)Exit          *\n"+
                             "*                                                                       *\n"+
                             "*************************************************************************\n");
+
+        switch (scan.nextInt()) {
+            case 1:
+                Run.Game(Run.view.NewGame);
+                break;
+            case 2:
+                Run.Game(Run.view.LoadGame);
+                break;
+            case 3:
+                Run.Game(Run.view.QuitGame);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + scan.nextInt());
+        }
+
+    }
+
+    @Override
+    public void ContinueMenu(){
+        clearScreen();
+
+        System.out.println("*************************************************************************\n"+
+                "*                                                                       *\n"+
+                "*   *****  *           *           *  *  *      *    ****   *       *   *\n"+
+                "*  *     *  *         * *         *   *  * *    *  *      *  *     *    *\n"+
+                "*  *         *       *   *       *    *  *  *   *  *      *   *   *     *\n"+
+                "*   *****     *     *     *     *     *  *   *  *  *           * *      *\n"+
+                "*        *     *   *       *   *      *  *    * *  *   ****     *       *\n"+
+                "*  *     *      * *         * *       *  *     **   *     *     *       *\n"+
+                "*   *****        *           *        *  *      *    **** *     *       *\n"+
+                "*                                                                       *\n"+
+                "*************************************************************************\n"+
+                "*                                                                       *\n"+
+                "*    (1)New Game       (2)Load Game       (3)Continue       (4)Exit     *\n"+
+                "*                                                                       *\n"+
+                "*************************************************************************\n");
+
+        switch (scan.nextInt()) {
+            case 1:
+                Run.Game(Run.view.NewGame);
+                break;
+            case 2:
+                Run.Game(Run.view.LoadGame);
+                break;
+            case 3:
+                Run.Game(Run.view.MoveMenu);
+                break;
+            case 4:
+                Run.Game(Run.view.QuitGame);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + scan.nextInt());
+        }
     }
     @Override
     public void NewGame(){
@@ -48,6 +106,19 @@ class console implements screens {
                  "*           Whats your name?              (B)Back         (Q)Exit       *\n"+
                  "*                                                                       *\n"+
                  "*************************************************************************\n");
+        //            default:
+        //                Run.Game(Run.view.MoveMenu, Run.view.ContinueMenu);
+        //                break;
+        switch (scan.nextLine()) {
+            case "B":
+                Run.Game(Run.view.LastGame);
+                break;
+            case "Q":
+                Run.Game(Run.view.QuitGame);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + scan.nextLine());
+        }
     }
     @Override
     public void SelectClass(){
@@ -66,7 +137,7 @@ class console implements screens {
                  "*                                                                       *\n"+
                  "*************************************************************************\n"+
                  "*                                                                       *\n"+
-                 "*         (1)Assassin    (2)Tank      (3)Necromancer    (4)archer        *\n"+
+                 "*         (1)Assassin    (2)Tank      (3)Necromancer    (4)archer       *\n"+
                  "*         Atk 50        Atk 30       Atk 70             Atk 50          *\n"+
                  "*         Def 50        Def 70       Def 30             Def 30          *\n"+
                  "*         Agility 50    Agility 10   Agility 30         Agility 70      *\n"+
@@ -75,6 +146,16 @@ class console implements screens {
                  "*                                                                       *\n"+
                  "*************************************************************************\n");
 
+        switch (scan.nextLine()) {
+            case "B":
+                Run.Game(Run.view.LastGame);
+                break;
+            case "Q":
+                Run.Game(Run.view.QuitGame);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + scan.nextLine());
+        }
     }
     @Override
     public void ClassName(){
@@ -195,7 +276,7 @@ class console implements screens {
                 "*************************************************************************\n"+
                 "*                                                                       *\n"+
                 "*      Enemy encountered!!!! Do you want to fight him or try to run?    *\n"+
-                "*          His stats are ??????????? retrive later                      *\n"+
+                "*          His stats are ??????????? retrieve later                      *\n"+
                 "*          (1)Fight                              (2)Run                 *\n"+
                 "*                                                                       *\n"+
                 "*           (B)Back                                                     *\n"+

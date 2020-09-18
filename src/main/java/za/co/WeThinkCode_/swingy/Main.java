@@ -40,19 +40,28 @@
 //7 add saving and loading characters
 //8 build the gui view
 //9 drink a fat beer
-package main.java.za.co.WeThinkCode_.swingy;
+package za.co.WeThinkCode_.swingy;
 
-import main.java.za.co.WeThinkCode_.swingy.model.Var;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import za.co.WeThinkCode_.swingy.control.Run;
+import za.co.WeThinkCode_.swingy.model.Var;
 
+@Builder
+@Getter
+@Setter
 public class Main {
 
     public static void main(String[] args) {
 
-        Var test = Var.builder().Player("something").build();
         if (args.length == 1) {
-            if (args[0].equals("-gui") || args[0].equals("-console")) {
-                System.out.println(args[0]);
-                System.out.println(test.getArmor());
+            if (args[0].toLowerCase().equals("-gui") || args[0].toLowerCase().equals("-console")) {
+                Var test = Var.builder().gameView(args[0].toLowerCase()).build();
+                System.out.println(test.getGameView());
+                Run.Game(test.getGameStage());
+                System.out.println("Works fine");
+
             }
             else
                 System.out.println("check that you spelt -gui or -console right and using the dash");

@@ -1,9 +1,12 @@
-package main.java.za.co.WeThinkCode_.swingy.model;
+package za.co.WeThinkCode_.swingy.model;
 
 import java.util.Random;
 
+//@Getter
+//@Setter
+//@Builder
 public class Stats{
-
+    Var test = Var.builder().build();
     public void AssassinStats(){
             Var.builder().Atk(50).Def(50).Dodge(50).build();
         }

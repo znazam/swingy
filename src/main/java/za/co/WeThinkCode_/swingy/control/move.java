@@ -1,14 +1,12 @@
-package main.java.za.co.WeThinkCode_.swingy.control;
+package za.co.WeThinkCode_.swingy.control;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import main.java.za.co.WeThinkCode_.swingy.model.Var;
+import za.co.WeThinkCode_.swingy.model.Var;
 
 import java.util.Scanner;
 
-@Getter
-@Setter
+//@Getter
+//@Setter
 public class move {
     Scanner scan = new Scanner(System.in);
     @Builder.Default protected int[] Coordinates = {0,0};

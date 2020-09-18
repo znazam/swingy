@@ -1,8 +1,9 @@
-package main.java.za.co.WeThinkCode_.swingy.model;
+package za.co.WeThinkCode_.swingy.model;
 
 public interface screens {
     public abstract void StartMenu();
     public abstract void NewGame();
+    public abstract void ContinueMenu();
     public abstract void SelectClass();
     public abstract void ClassName();
     public abstract void LoadGame();

@@ -1,14 +1,12 @@
 package za.co.WeThinkCode_.swingy.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+//@Getter
+//@Setter
 //@NonNull
 @Builder
+@Data
 public class Var{
 
    protected String Assassin; //equal defence and attack and dodge
@@ -23,7 +21,7 @@ public class Var{
    protected int Dmg;
    protected int Dodge;
    protected String Artifacts;
-   protected String gameView;
+   private String gameView;
 
    @Builder.Default protected za.co.WeThinkCode_.swingy.control.Run.view gameStage = za.co.WeThinkCode_.swingy.control.Run.view.StartMenu;
    @Builder.Default protected za.co.WeThinkCode_.swingy.control.Run.view lastStage = za.co.WeThinkCode_.swingy.control.Run.view.StartMenu;

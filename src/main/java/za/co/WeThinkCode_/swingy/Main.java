@@ -58,7 +58,7 @@ public class Main {
         if (args.length == 1) {
             if (args[0].toLowerCase().equals("-gui") || args[0].toLowerCase().equals("-console")) {
                 Var test = Var.builder().gameView(args[0].toLowerCase()).build();
-                System.out.println(test.getGameView());
+                //System.out.println(test.getGameView());
                 Run.Game(test.getGameStage());
                 System.out.println("Works fine");
 

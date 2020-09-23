@@ -6,12 +6,13 @@ import za.co.WeThinkCode_.swingy.model.Var;
 import za.co.WeThinkCode_.swingy.model.screens;
 
 import za.co.WeThinkCode_.swingy.view.Console;
+import za.co.WeThinkCode_.swingy.view.Gui;
 
 @Getter
 @Setter
 public class Run {
 
-    public static enum view{
+    public enum view{
         StartMenu,
         NewGame,
         ContinueMenu,
@@ -40,122 +41,54 @@ public class Run {
 
 
         Console displayCon = new Console();
-//        Gui displayGui = new Gui();
-        Var stage = Var.builder().lastStage(view.StartMenu).build();
-        System.out.println(stage.getGameView());
+        Gui displayGui = new Gui();
+        Var stage = Var.builder().build();
+        String s = stage.getGameView();
+        System.out.println(s);
         switch (stage.getGameView()) {
             case "-console":
                 switch (gameStage) {
-                    case StartMenu:
+                    case StartMenu, LastGame -> {
                         displayCon.StartMenu();
-                        break;
-                    case NewGame:
-                        displayCon.NewGame();
-                        break;
-                    case ContinueMenu:
-                        displayCon.ContinueMenu();
-                        break;
-                    case SelectClass:
-                        displayCon.SelectClass();
-                        break;
-                    case ClassName:
-                        displayCon.ClassName();
-                        break;
-                    case LoadGame:
-                        displayCon.LoadGame();
-                        break;
-                    case SelectChar:
-                        displayCon.SelectChar();
-                        break;
-                    case MoveMenu:
-                        displayCon.MoveMenu();
-                        break;
-                    case EnemyEncountered:
-                        displayCon.EnemyEncountered();
-                        break;
-                    case FightWon:
-                        displayCon.FightWon();
-                        break;
-                    case ItemDropped:
-                        displayCon.ItemDropped();
-                        break;
-                    case FightLost:
-                        displayCon.FightLost();
-                        break;
-                    case RanAway:
-                        displayCon.RanAway();
-                        break;
-                    case RunFail:
-                        displayCon.RunFail();
-                        break;
-                    case NewLevel:
-                        displayCon.NewLevel();
-                        break;
-                    case QuitVerify:
-                        displayCon.QuitVerify();
-                        break;
-                    case QuitGame:
-                        displayCon.QuitGame();
-                        break;
-                    case LastGame:
-                        displayCon.StartMenu();
+                        System.out.println("accesses case StartMenu");
+                    }
+                    case NewGame -> displayCon.NewGame();
+                    case ContinueMenu -> displayCon.ContinueMenu();
+                    case SelectClass -> displayCon.SelectClass();
+                    case ClassName -> displayCon.ClassName();
+                    case LoadGame -> displayCon.LoadGame();
+                    case SelectChar -> displayCon.SelectChar();
+                    case MoveMenu -> displayCon.MoveMenu();
+                    case EnemyEncountered -> displayCon.EnemyEncountered();
+                    case FightWon -> displayCon.FightWon();
+                    case ItemDropped -> displayCon.ItemDropped();
+                    case FightLost -> displayCon.FightLost();
+                    case RanAway -> displayCon.RanAway();
+                    case RunFail -> displayCon.RunFail();
+                    case NewLevel -> displayCon.NewLevel();
+                    case QuitVerify -> displayCon.QuitVerify();
+                    case QuitGame -> displayCon.QuitGame();
                 }
                 break;
             case "-gui":
                 switch (gameStage) {
-                    case StartMenu:
-                        displayCon.StartMenu();
-                        break;
-                    case NewGame:
-                        displayCon.NewGame();
-                        break;
-                    case ContinueMenu:
-                        displayCon.ContinueMenu();
-                        break;
-                    case SelectClass:
-                        displayCon.SelectClass();
-                        break;
-                    case ClassName:
-                        displayCon.ClassName();
-                        break;
-                    case LoadGame:
-                        displayCon.LoadGame();
-                        break;
-                    case SelectChar:
-                        displayCon.SelectChar();
-                        break;
-                    case MoveMenu:
-                        displayCon.MoveMenu();
-                        break;
-                    case EnemyEncountered:
-                        displayCon.EnemyEncountered();
-                        break;
-                    case FightWon:
-                        displayCon.FightWon();
-                        break;
-                    case ItemDropped:
-                        displayCon.ItemDropped();
-                        break;
-                    case FightLost:
-                        displayCon.FightLost();
-                        break;
-                    case RanAway:
-                        displayCon.RanAway();
-                        break;
-                    case RunFail:
-                        displayCon.RunFail();
-                        break;
-                    case NewLevel:
-                        displayCon.NewLevel();
-                        break;
-                    case QuitVerify:
-                        displayCon.QuitVerify();
-                        break;
-                    case QuitGame:
-                        displayCon.QuitGame();
-                        break;
-                    case LastGame:
-                        displayCon.StartMenu();
+                    case StartMenu, LastGame -> displayGui.StartMenu();
+//                    case NewGame -> displayGui.NewGame();
+//                    case ContinueMenu -> displayGui.ContinueMenu();
+//                    case SelectClass -> displayGui.SelectClass();
+//                    case ClassName -> displayGui.ClassName();
+//                    case LoadGame -> displayGui.LoadGame();
+//                    case SelectChar -> displayGui.SelectChar();
+//                    case MoveMenu -> displayGui.MoveMenu();
+//                    case EnemyEncountered -> displayGui.EnemyEncountered();
+//                    case FightWon -> displayGui.FightWon();
+//                    case ItemDropped -> displayGui.ItemDropped();
+//                    case FightLost -> displayGui.FightLost();
+//                    case RanAway -> displayGui.RanAway();
+//                    case RunFail -> displayGui.RunFail();
+//                    case NewLevel -> displayGui.NewLevel();
+//                    case QuitVerify -> displayGui.QuitVerify();
+//                    case QuitGame -> displayGui.QuitGame();
                 }
                 break;
         }

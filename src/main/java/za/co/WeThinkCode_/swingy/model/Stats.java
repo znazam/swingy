@@ -7,9 +7,7 @@ import java.util.Random;
 //@Builder
 public class Stats{
     Var test = Var.builder().build();
-    public void AssassinStats(){
-            Var.builder().Atk(50).Def(50).Dodge(50).build();
-        }
+    public void AssassinStats(){ Var.builder().Atk(50).Def(50).Dodge(50).build(); }
 
         public void TankStats(){
             Var.builder().Atk(30).Def(70).Dodge(10).build();

@@ -1,7 +1,6 @@
 package za.co.WeThinkCode_.swingy.view;
 
 
-import lombok.Builder;
 import za.co.WeThinkCode_.swingy.control.Run;
 import za.co.WeThinkCode_.swingy.model.screens;
 
@@ -16,7 +15,7 @@ public class Console implements screens {
     public void StartMenu(){
 
         clearScreen();
-
+        System.out.println("accesses StartMenu");
         System.out.println("*************************************************************************\n"+
                             "*                                                                       *\n"+
                             "*   *****  *           *           *  *  *      *    ****   *       *   *\n"+
@@ -34,17 +33,10 @@ public class Console implements screens {
                             "*************************************************************************\n");
 
         switch (scan.nextInt()) {
-            case 1:
-                Run.Game(Run.view.NewGame);
-                break;
-            case 2:
-                Run.Game(Run.view.LoadGame);
-                break;
-            case 3:
-                Run.Game(Run.view.QuitGame);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + scan.nextInt());
+            case 1 -> Run.Game(Run.view.NewGame);
+            case 2 -> Run.Game(Run.view.LoadGame);
+            case 3 -> Run.Game(Run.view.QuitGame);
+            default -> throw new IllegalStateException("Unexpected value: " + scan.nextInt());
         }
 
     }
@@ -70,20 +62,11 @@ public class Console implements screens {
                 "*************************************************************************\n");
 
         switch (scan.nextInt()) {
-            case 1:
-                Run.Game(Run.view.NewGame);
-                break;
-            case 2:
-                Run.Game(Run.view.LoadGame);
-                break;
-            case 3:
-                Run.Game(Run.view.MoveMenu);
-                break;
-            case 4:
-                Run.Game(Run.view.QuitGame);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + scan.nextInt());
+            case 1 -> Run.Game(Run.view.NewGame);
+            case 2 -> Run.Game(Run.view.LoadGame);
+            case 3 -> Run.Game(Run.view.MoveMenu);
+            case 4 -> Run.Game(Run.view.QuitGame);
+            default -> throw new IllegalStateException("Unexpected value: " + scan.nextInt());
         }
     }
     @Override
@@ -110,14 +93,9 @@ public class Console implements screens {
         //                Run.Game(Run.view.MoveMenu, Run.view.ContinueMenu);
         //                break;
         switch (scan.nextLine()) {
-            case "B":
-                Run.Game(Run.view.LastGame);
-                break;
-            case "Q":
-                Run.Game(Run.view.QuitGame);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + scan.nextLine());
+            case "B" -> Run.Game(Run.view.LastGame);
+            case "Q" -> Run.Game(Run.view.QuitGame);
+            default -> throw new IllegalStateException("Unexpected value: " + scan.nextLine());
         }
     }
     @Override
@@ -137,7 +115,7 @@ public class Console implements screens {
                  "*                                                                       *\n"+
                  "*************************************************************************\n"+
                  "*                                                                       *\n"+
-                 "*         (1)Assassin    (2)Tank      (3)Necromancer    (4)archer       *\n"+
+                 "*         (1)Assassin   (2)Tank      (3)Necromancer     (4)archer       *\n"+
                  "*         Atk 50        Atk 30       Atk 70             Atk 50          *\n"+
                  "*         Def 50        Def 70       Def 30             Def 30          *\n"+
                  "*         Agility 50    Agility 10   Agility 30         Agility 70      *\n"+
@@ -147,14 +125,9 @@ public class Console implements screens {
                  "*************************************************************************\n");
 
         switch (scan.nextLine()) {
-            case "B":
-                Run.Game(Run.view.LastGame);
-                break;
-            case "Q":
-                Run.Game(Run.view.QuitGame);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + scan.nextLine());
+            case "B" -> Run.Game(Run.view.LastGame);
+            case "Q" -> Run.Game(Run.view.QuitGame);
+            default -> throw new IllegalStateException("Unexpected value: " + scan.nextLine());
         }
     }
     @Override

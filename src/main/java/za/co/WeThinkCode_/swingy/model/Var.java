@@ -1,10 +1,11 @@
 package za.co.WeThinkCode_.swingy.model;
 
 import lombok.*;
+import javax.validation.constraints.*;
 
 //@Getter
 //@Setter
-//@NonNull
+@NonNull
 @Builder
 @Data
 public class Var{
@@ -15,13 +16,14 @@ public class Var{
    protected String Archer; //higher chance to dodge
    protected String Enemy;
    protected String ClassName;
+   @Size(min = 2, max = 10)
    protected String Player;
    protected int Atk;
    protected int Def;
    protected int Dmg;
    protected int Dodge;
    protected String Artifacts;
-   private String gameView;
+   protected String gameView;
 
    @Builder.Default protected za.co.WeThinkCode_.swingy.control.Run.view gameStage = za.co.WeThinkCode_.swingy.control.Run.view.StartMenu;
    @Builder.Default protected za.co.WeThinkCode_.swingy.control.Run.view lastStage = za.co.WeThinkCode_.swingy.control.Run.view.StartMenu;

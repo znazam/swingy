@@ -39,12 +39,15 @@ public class Run {
 
     public static void Game(view gameStage){
 
-
+        //if its console view than I'll use this variable to display the game via terminal
         Console displayCon = new Console();
+        //if its gui view than I'll use this variable to display the game via swing
         Gui displayGui = new Gui();
+        // I'm instantiating so that I can access the variables in Var.java
         Var stage = Var.builder().build();
-        String s = stage.getGameView();
-        System.out.println(s);
+        //here I'm checking whats in gameView which is in Var but comes out null
+        System.out.println(stage.getGameView());
+        // I use game view to check exactly what view im using and run either console or gui view
         switch (stage.getGameView()) {
             case "-console":
                 switch (gameStage) {

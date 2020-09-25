@@ -48,20 +48,23 @@ import lombok.Setter;
 import za.co.WeThinkCode_.swingy.control.Run;
 import za.co.WeThinkCode_.swingy.model.Var;
 
-@Builder
-@Getter
-@Setter
+//@Builder
+//@Getter
+//@Setter
 public class Main {
 
     public static void main(String[] args) {
 
         if (args.length == 1) {
             if (args[0].toLowerCase().equals("-gui") || args[0].toLowerCase().equals("-console")) {
-                // i need to know which view the person would like to play the game in
-                Var test = Var.builder().gameView(args[0].toLowerCase()).build();
-                // i put the view which is given as an argument either gui or console inside of gameView which is first turned to lowercase
-                //System.out.println(test.getGameView());
-                Run.Game(test.getGameStage());
+//                Var test = Var.builder().Player("Vlad").gameView(args[0].toLowerCase()).build();
+//                Var test = new Var();
+//                test.setGameView(args[0].toLowerCase());
+//                test.setPlayer("Vlad");
+//                System.out.println(test.getGameView());
+//                System.out.println(test.getPlayer());
+//                System.out.println(test.getHelm());
+                Run.Game(args[0].toLowerCase());
                 System.out.println("Works fine");
 
             }

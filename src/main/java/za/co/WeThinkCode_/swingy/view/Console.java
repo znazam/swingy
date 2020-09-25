@@ -1,18 +1,38 @@
 package za.co.WeThinkCode_.swingy.view;
 
 
-import za.co.WeThinkCode_.swingy.control.Run;
+import lombok.Getter;
+import lombok.Setter;
+import za.co.WeThinkCode_.swingy.model.CreateDB;
+import za.co.WeThinkCode_.swingy.model.Stats;
 import za.co.WeThinkCode_.swingy.model.screens;
 
+import javax.validation.constraints.Size;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Scanner;
 
-
+@Getter
+@Setter
 public class Console implements screens {
+    protected int Atk;
+    protected int Def;
+    protected int Dodge;
+    @Size(min = 2, max = 10)
+    protected String PlayerName;
+    @Size(min = 2, max = 10)
+    protected String CharacterName;
+    protected int Exp;
+    protected int Level;
+    protected int Hp;
+    protected String Helm;
+    protected String Armour;
+    protected String Weapon;
+    CreateDB db = new CreateDB();
 
-    Scanner scan = new Scanner(System.in);
     @Override
     public void StartMenu(){
+        Scanner scan = new Scanner(System.in);
 
         clearScreen();
         System.out.println("accesses StartMenu");
@@ -33,9 +53,9 @@ public class Console implements screens {
                             "*************************************************************************\n");
 
         switch (scan.nextInt()) {
-            case 1 -> Run.Game(Run.view.NewGame);
-            case 2 -> Run.Game(Run.view.LoadGame);
-            case 3 -> Run.Game(Run.view.QuitGame);
+            case 1 -> NewGame();
+            case 2 -> LoadGame();
+            case 3 -> QuitVerify();
             default -> throw new IllegalStateException("Unexpected value: " + scan.nextInt());
         }
 
@@ -43,6 +63,7 @@ public class Console implements screens {
 
     @Override
     public void ContinueMenu(){
+        Scanner scan = new Scanner(System.in);
         clearScreen();
 
         System.out.println("*************************************************************************\n"+
@@ -62,15 +83,16 @@ public class Console implements screens {
                 "*************************************************************************\n");
 
         switch (scan.nextInt()) {
-            case 1 -> Run.Game(Run.view.NewGame);
-            case 2 -> Run.Game(Run.view.LoadGame);
-            case 3 -> Run.Game(Run.view.MoveMenu);
-            case 4 -> Run.Game(Run.view.QuitGame);
+            case 1 -> NewGame();
+            case 2 -> LoadGame();
+            case 3 -> MoveMenu();
+            case 4 -> QuitVerify();
             default -> throw new IllegalStateException("Unexpected value: " + scan.nextInt());
         }
     }
     @Override
     public void NewGame(){
+        Scanner scan = new Scanner(System.in);
 
         clearScreen();
 
@@ -86,21 +108,21 @@ public class Console implements screens {
                  "*                                                                       *\n"+
                  "*************************************************************************\n"+
                  "*                                                                       *\n"+
-                 "*           Whats your name?              (B)Back         (Q)Exit       *\n"+
+                 "*                           Whats your name?                            *\n"+
                  "*                                                                       *\n"+
                  "*************************************************************************\n");
-        //            default:
-        //                Run.Game(Run.view.MoveMenu, Run.view.ContinueMenu);
-        //                break;
-        switch (scan.nextLine()) {
-            case "B" -> Run.Game(Run.view.LastGame);
-            case "Q" -> Run.Game(Run.view.QuitGame);
-            default -> throw new IllegalStateException("Unexpected value: " + scan.nextLine());
-        }
+
+        String welcome = "Welcome to Swingy ";
+
+        PlayerName = scan.nextLine();
+        System.out.println(welcome + getPlayerName());
+        SelectClass();
     }
+
     @Override
     public void SelectClass(){
-
+        Scanner scan = new Scanner(System.in);
+        Stats stat = new Stats();
         clearScreen();
 
         System.out.println("*************************************************************************\n"+
@@ -125,14 +147,41 @@ public class Console implements screens {
                  "*************************************************************************\n");
 
         switch (scan.nextLine()) {
-            case "B" -> Run.Game(Run.view.LastGame);
-            case "Q" -> Run.Game(Run.view.QuitGame);
+            case "1" -> {stat.AssassinStats();
+                Atk = stat.getAtk();
+                Def = stat.getDef();
+                Dodge = stat.getDodge();
+                System.out.println(Atk+" "+Def+" "+Dodge);
+                ClassName();
+            }
+            case "2"-> {stat.TankStats();
+                Atk = stat.getAtk();
+                Def = stat.getDef();
+                Dodge = stat.getDodge();
+                System.out.println(Atk+" "+Def+" "+Dodge);
+                ClassName();
+            }
+            case "3" -> {stat.NecromancerStats();
+                Atk = stat.getAtk();
+                Def = stat.getDef();
+                Dodge = stat.getDodge();
+                System.out.println(Atk+" "+Def+" "+Dodge);
+                ClassName();
+            }
+            case "4" -> {stat.ArcherStats();
+                Atk = stat.getAtk();
+                Def = stat.getDef();
+                Dodge = stat.getDodge();
+                System.out.println(Atk+" "+Def+" "+Dodge);
+                ClassName();}
+            case "B" -> StartMenu();
+            case "Q" -> QuitVerify();
             default -> throw new IllegalStateException("Unexpected value: " + scan.nextLine());
         }
     }
     @Override
     public void ClassName(){
-
+        Scanner scan = new Scanner(System.in);
         clearScreen();
 
         System.out.println("*************************************************************************\n"+
@@ -152,6 +201,19 @@ public class Console implements screens {
                 "*           (B)Back                                                     *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
+       while(!scan.hasNext("B")){
+           CharacterName = scan.nextLine();
+           System.out.println(CharacterName);
+           db.sql("INSERT INTO Swing(PlayerName,Atk,Def,Dodge,Level,Exp,Hp,CharacterName,Helm,Armour,Weapon) VALUES('PlayerName','Atk','Def','Dodge','Level','Exp','Hp','CharacterName','Helm','Armour','Weapon')", "add");
+           MoveMenu();
+       }
+       SelectClass();
+//        if ("B".equals(scan.nextLine())) {
+//                SelectClass();
+//            } else {
+//                ClassName = scan.nextLine();
+//                System.out.println(ClassName);
+//            }
     }
     @Override
     public void LoadGame(){
@@ -208,7 +270,7 @@ public class Console implements screens {
     }
     @Override
     public void MoveMenu(){
-
+        Scanner scan = new Scanner(System.in);
         clearScreen();
 
         System.out.println("*************************************************************************\n"+
@@ -229,7 +291,9 @@ public class Console implements screens {
                  "*      (B)Back                                                          *\n"+
                  "*                                                                       *\n"+
                  "*************************************************************************\n");
-
+        switch (scan.nextLine()){
+            case "B" -> StartMenu();
+        }
     }
     @Override
     public void EnemyEncountered(){
@@ -386,6 +450,7 @@ public class Console implements screens {
     }
     @Override
     public void QuitVerify(){
+        Scanner scan = new Scanner(System.in);
 
         clearScreen();
 
@@ -405,6 +470,11 @@ public class Console implements screens {
                 "*                    (1)Yes               (2)No                         *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
+
+        switch (scan.nextInt()){
+            case 1 -> QuitGame();
+            case 2 -> StartMenu();
+        }
     }
     @Override
     public void QuitGame(){

@@ -3,11 +3,11 @@ package za.co.WeThinkCode_.swingy.model;
 import lombok.*;
 import javax.validation.constraints.*;
 
-//@Getter
-//@Setter
+@Getter(AccessLevel.PUBLIC)
+@Setter(AccessLevel.PUBLIC)
 @NonNull
-@Builder
-@Data
+//@Builder
+//@Data
 public class Var{
 
    protected String Assassin; //equal defence and attack and dodge
@@ -15,24 +15,17 @@ public class Var{
    protected String Necromancer; //more Attack
    protected String Archer; //higher chance to dodge
    protected String Enemy;
-   protected String ClassName;
    @Size(min = 2, max = 10)
    protected String Player;
-   protected int Atk;
-   protected int Def;
    protected int Dmg;
-   protected int Dodge;
    protected String Artifacts;
-   protected String gameView;
 
-   @Builder.Default protected za.co.WeThinkCode_.swingy.control.Run.view gameStage = za.co.WeThinkCode_.swingy.control.Run.view.StartMenu;
-   @Builder.Default protected za.co.WeThinkCode_.swingy.control.Run.view lastStage = za.co.WeThinkCode_.swingy.control.Run.view.StartMenu;
-   @Builder.Default protected int Hp = 100;
-   @Builder.Default protected String Helm = "Leather";
-   @Builder.Default protected String Armor = "Leather";
-   @Builder.Default protected String Weapon = "Leather";
-   @Builder.Default protected int Exp = 0;
-   @Builder.Default protected int Level = 1;
+//   @Builder.Default
+   @Size(max = 100, min = 0)
+   protected int Hp = 100;
+
+//   @Builder.Default
+   protected int Exp = 0;
 //   @Builder.Default protected int[] Coordinates = {0,0};
 
    protected boolean Fight;

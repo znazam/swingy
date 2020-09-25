@@ -49,7 +49,7 @@ public class Gui implements screens {
 //    DirectionB.add(SouthB);
 //    DirectionB.add(EastB);
 
-//    to set a text from a variable use label.setText(variable); in a method and for number label.setText("" + variable);
+//    to set a text from a variable use label.setText(variable); in a method and for number label.setText("" + variable); export DISPLAY=:0.0
 
 //    public static void main(String[] args){
 //        Gui run = new Gui();

@@ -46,6 +46,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import za.co.WeThinkCode_.swingy.control.Run;
+import za.co.WeThinkCode_.swingy.model.CreateDB;
 import za.co.WeThinkCode_.swingy.model.Var;
 
 //@Builder
@@ -57,13 +58,8 @@ public class Main {
 
         if (args.length == 1) {
             if (args[0].toLowerCase().equals("-gui") || args[0].toLowerCase().equals("-console")) {
-//                Var test = Var.builder().Player("Vlad").gameView(args[0].toLowerCase()).build();
-//                Var test = new Var();
-//                test.setGameView(args[0].toLowerCase());
-//                test.setPlayer("Vlad");
-//                System.out.println(test.getGameView());
-//                System.out.println(test.getPlayer());
-//                System.out.println(test.getHelm());
+                //CreateDB db = new CreateDB();
+                //db.ListDB();
                 Run.Game(args[0].toLowerCase());
                 System.out.println("Works fine");
 

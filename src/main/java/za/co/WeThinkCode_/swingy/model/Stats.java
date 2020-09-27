@@ -9,10 +9,10 @@ import java.util.Random;
 @Getter
 @Setter
 public class Stats{
-    protected int Atk;
-    protected int Def;
-    protected int Dodge;
-    protected int Level = 1;
+    protected int Atk = 0;
+    protected int Def = 0;
+    protected int Dodge = 0;
+//    protected int Level = 1;
     protected String Helm = "Leather";
     protected String Armor = "Leather";
     protected String Weapon = "Leather";
@@ -30,9 +30,9 @@ public class Stats{
             Atk=50;Def=30;Dodge=70;
         }
 
-        public void EnemyStats(){
+        public void EnemyStats(int Level){
 
-            switch (getLevel()) {
+            switch (Level) {
                 case 1 -> {
                     Atk=30;
                     Def=30;
@@ -62,7 +62,7 @@ public class Stats{
         }
 
 
-        public void equipment (@NotNull String Item){
+        public void RandomE (String Item){
 
 
             final String[] helm = {"VictorGoldenHelmet", "FaceGuardOfDivineGlory", "HeadCoverOfSacredFreedom", "SteelHelmOfBurningSorrow", "IronJawsOfCondemnedLands"};
@@ -73,95 +73,97 @@ public class Stats{
             Helm=(helm[random.nextInt(5)]);
             Armor=(armor[random.nextInt(5)]);
             Weapon=(weapon[random.nextInt(5)]);
-
-            switch (Item) {
-                case "Helm":
-                    switch (Helm) {
-                        case "VictorGoldenHelmet" -> {
-                            Atk=Atk + 10;
-                            Def=Def+10;
-                            Dodge=Dodge+10;
-                        }
-                        case "FaceGuardOfDivineGlory" -> {
-                            Atk=Atk+20;
-                            Def=Def+10;
-                            Dodge=Dodge+20;
-                        }
-                        case "HeadCoverOfSacredFreedom" -> {
-                            Atk=Atk + 10;
-                            Def=Def+20;
-                            Dodge=Dodge+30;
-                        }
-                        case "SteelHelmOfBurningSorrow" -> {
-                            Atk=Atk+15;
-                            Def=Def+15;
-                            Dodge=Dodge+40;
-                        }
-                        case "IronJawsOfCondemnedLands" -> {
-                            Atk=Atk+20;
-                            Def=Def+20;
-                            Dodge=Dodge+50;
-                        }
-                    }
-                    break;
-                case "Armor":
-                    switch (Armor) {
-                        case "DefenderOfSunlight" -> {
-                            Atk=Atk + 10;
-                            Def=Def+10;
-                            Dodge=Dodge+10;
-                        }
-                        case "BreastplateOfHellishPunishment" -> {
-                            Atk=Atk+20;
-                            Def=Def+20;
-                            Dodge=Dodge+10;
-                        }
-                        case "TunicOfCondemnedHell" -> {
-                            Atk=Atk + 10;
-                            Def=Def+30;
-                            Dodge=Dodge+20;
-                        }
-                        case "RuggedLeatherGarments" -> {
-                            Atk=Atk+15;
-                            Def=Def+40;
-                            Dodge=Dodge+15;
-                        }
-                        case "VestmentOfCursedMight" -> {
-                            Atk=Atk+20;
-                            Def=Def+50;
-                            Dodge=Dodge+20;
-                        }
-                    }
-                    break;
-                case "Weapon":
-                    switch (Weapon) {
-                        case "LichTrinket" -> {
-                            Atk=Atk + 10;
-                            Def=Def+10;
-                            Dodge=Dodge+10;
-                        }
-                        case "Ash" -> {
-                            Atk=Atk+20;
-                            Def=Def+20;
-                            Dodge=Dodge+10;
-                        }
-                        case "Enigma" -> {
-                            Atk=Atk+30;
-                            Def=Def+10;
-                            Dodge=Dodge+20;
-                        }
-                        case "DefenderCore" -> {
-                            Atk=Atk+40;
-                            Def=Def+15;
-                            Dodge=Dodge+15;
-                        }
-                        case "LoyalChalice" -> {
-                            Atk=Atk+50;
-                            Def=Def+20;
-                            Dodge=Dodge+20;
-                        }
-                    }
-                    break;
-            }
+            Equipmant(Item);
     }
+
+    public void Equipmant(String Item){
+        switch (Item) {
+        case "Helm":
+            switch (Helm) {
+                case "VictorGoldenHelmet" -> {
+                    Atk=Atk + 10;
+                    Def=Def+10;
+                    Dodge=Dodge+10;
+                }
+                case "FaceGuardOfDivineGlory" -> {
+                    Atk=Atk+20;
+                    Def=Def+10;
+                    Dodge=Dodge+20;
+                }
+                case "HeadCoverOfSacredFreedom" -> {
+                    Atk=Atk + 10;
+                    Def=Def+20;
+                    Dodge=Dodge+30;
+                }
+                case "SteelHelmOfBurningSorrow" -> {
+                    Atk=Atk+15;
+                    Def=Def+15;
+                    Dodge=Dodge+40;
+                }
+                case "IronJawsOfCondemnedLands" -> {
+                    Atk=Atk+20;
+                    Def=Def+20;
+                    Dodge=Dodge+50;
+                }
+            }
+            break;
+        case "Armor":
+            switch (Armor) {
+                case "DefenderOfSunlight" -> {
+                    Atk=Atk + 10;
+                    Def=Def+10;
+                    Dodge=Dodge+10;
+                }
+                case "BreastplateOfHellishPunishment" -> {
+                    Atk=Atk+20;
+                    Def=Def+20;
+                    Dodge=Dodge+10;
+                }
+                case "TunicOfCondemnedHell" -> {
+                    Atk=Atk + 10;
+                    Def=Def+30;
+                    Dodge=Dodge+20;
+                }
+                case "RuggedLeatherGarments" -> {
+                    Atk=Atk+15;
+                    Def=Def+40;
+                    Dodge=Dodge+15;
+                }
+                case "VestmentOfCursedMight" -> {
+                    Atk=Atk+20;
+                    Def=Def+50;
+                    Dodge=Dodge+20;
+                }
+            }
+            break;
+        case "Weapon":
+            switch (Weapon) {
+                case "LichTrinket" -> {
+                    Atk=Atk + 10;
+                    Def=Def+10;
+                    Dodge=Dodge+10;
+                }
+                case "Ash" -> {
+                    Atk=Atk+20;
+                    Def=Def+20;
+                    Dodge=Dodge+10;
+                }
+                case "Enigma" -> {
+                    Atk=Atk+30;
+                    Def=Def+10;
+                    Dodge=Dodge+20;
+                }
+                case "DefenderCore" -> {
+                    Atk=Atk+40;
+                    Def=Def+15;
+                    Dodge=Dodge+15;
+                }
+                case "LoyalChalice" -> {
+                    Atk=Atk+50;
+                    Def=Def+20;
+                    Dodge=Dodge+20;
+                }
+            }
+            break;
+    }}
 }

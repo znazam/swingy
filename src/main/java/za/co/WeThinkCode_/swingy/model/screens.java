@@ -9,7 +9,7 @@ public interface screens {
     public abstract void LoadGame();
     public abstract void SelectChar();
     public abstract void MoveMenu();
-    public abstract void EnemyEncountered();
+    public abstract void EnemyEncountered(int[] tempCor);
     public abstract void FightWon();
     public abstract void ItemDropped();
     public abstract void FightLost();

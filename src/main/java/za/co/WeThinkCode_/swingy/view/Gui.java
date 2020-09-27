@@ -254,7 +254,7 @@ public class Gui implements screens {
     }
 
     @Override
-    public void EnemyEncountered() {
+    public void EnemyEncountered(int[] tempCor) {
 
     }
 

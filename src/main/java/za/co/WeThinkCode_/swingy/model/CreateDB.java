@@ -2,6 +2,7 @@ package za.co.WeThinkCode_.swingy.model;
 
 //sqlite3 mydatabase.db to create a new database
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 
 
@@ -11,15 +12,17 @@ public class CreateDB {
     Connection conn = null;
     public CreateDB() {
         try {
-            String url = "jdbc:sqlite:C:/Users/VladNazam/OneDrive/Desktop/wtc/swingy/SwingyDB.db";
+            String url = "za/co/WeThinkCode_/swingy/SwingyDB";
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(url);
 
             System.out.println("Connection to SQLite has been established.");
 
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("what the hell"+e.getMessage());
-        }
+            System.out.println("what the hell"+e.getMessage());}
+//        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void ListDB(){

@@ -2,45 +2,36 @@ package za.co.WeThinkCode_.swingy.view;
 
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import za.co.WeThinkCode_.swingy.control.Fight;
 import za.co.WeThinkCode_.swingy.control.Move;
-import za.co.WeThinkCode_.swingy.model.CreateDB;
 import za.co.WeThinkCode_.swingy.model.Stats;
 import za.co.WeThinkCode_.swingy.model.screens;
 
 import javax.validation.constraints.Size;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.SQLException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-//@Data
+@Data
 public class Console implements screens {
     String saveFilePath = new File("").getAbsolutePath().concat("\\SaveFiles\\");
-    protected int Atk;
-    protected int Def;
-    protected int Dodge;
+    protected int Atk = 0;
+    protected int Def = 0;
+    protected int Dodge = 0;
     protected String className;
     @Size(min = 2, max = 10)
     protected String PlayerName;
     @Size(min = 2, max = 10)
     protected String CharacterName;
     protected int Exp;
-    @Getter
-    @Setter
     protected int Level = 1;
     protected int Hp = 100;
     protected String Helm = "Leather";
     protected String Armour = "Leather";
     protected String Weapon = "Leather";
-    int[] Coordinates = {0,0};
-//    CreateDB db = new CreateDB();
+    protected int[] Coordinates = {0,0};
 
     @Override
     public void StartMenu(){
@@ -125,8 +116,8 @@ public class Console implements screens {
 
         String welcome = "Welcome to Swingy ";
 
-        PlayerName = scan.nextLine();
-        System.out.println(welcome + PlayerName);
+        setPlayerName(scan.nextLine());
+        System.out.println(welcome + getPlayerName());
         SelectClass();
     }
 
@@ -151,7 +142,7 @@ public class Console implements screens {
                  "*         (1)Assassin   (2)Tank      (3)Necromancer     (4)archer       *\n"+
                  "*         Atk 50        Atk 30       Atk 70             Atk 50          *\n"+
                  "*         Def 50        Def 70       Def 30             Def 30          *\n"+
-                 "*         Agility 50    Agility 10   Agility 30         Agility 70      *\n"+
+                 "*         Dodge 50      Dodge 10     Dodge 30           Dodge 70        *\n"+
                  "*                                                                       *\n"+
                  "*         (B)Back                                       (Q)Exit         *\n"+
                  "*                                                                       *\n"+
@@ -159,34 +150,34 @@ public class Console implements screens {
 
         switch (scan.nextLine()) {
             case "1" -> {stat.AssassinStats();
-                className = "Assassin";
-                Atk = stat.getAtk();
-                Def = stat.getDef();
-                Dodge = stat.getDodge();
-                System.out.println(Atk+" "+Def+" "+Dodge);
+                setClassName("Assassin");
+                setAtk(stat.getAtk());
+                setDef(stat.getDef());
+                setDodge(stat.getDodge());
+                System.out.println(getAtk()+" "+getDef()+" "+getDodge());
                 ClassName();
             }
             case "2"-> {stat.TankStats();
-                className = "Tank";
-                Atk = stat.getAtk();
-                Def = stat.getDef();
-                Dodge = stat.getDodge();
-                System.out.println(Atk+" "+Def+" "+Dodge);
+                setClassName("Tank");
+                setAtk(stat.getAtk());
+                setDef(stat.getDef());
+                setDodge(stat.getDodge());
+                System.out.println(getAtk()+" "+getDef()+" "+getDodge());
                 ClassName();
             }
             case "3" -> {stat.NecromancerStats();
-                className = "Necromancer";
-                Atk = stat.getAtk();
-                Def = stat.getDef();
-                Dodge = stat.getDodge();
-                System.out.println(Atk+" "+Def+" "+Dodge);
+                setClassName("Necromancer");
+                setAtk(stat.getAtk());
+                setDef(stat.getDef());
+                setDodge(stat.getDodge());
+                System.out.println(getAtk()+" "+getDef()+" "+getDodge());
                 ClassName();
             }
             case "4" -> {stat.ArcherStats();
-                className = "Archer";
-                Atk = stat.getAtk();
-                Def = stat.getDef();
-                Dodge = stat.getDodge();
+                setClassName("Archer");
+                setAtk(stat.getAtk());
+                setDef(stat.getDef());
+                setDodge(stat.getDodge());
                 System.out.println(Atk+" "+Def+" "+Dodge);
                 ClassName();}
             case "B" -> StartMenu();
@@ -223,18 +214,11 @@ public class Console implements screens {
            MoveMenu();
        }
        SelectClass();
-//        if ("B".equals(scan.nextLine())) {
-//                SelectClass();
-//            } else {
-//                ClassName = scan.nextLine();
-//                System.out.println(ClassName);
-//            }
     }
     @Override
     public void LoadGame(){
         Scanner scan = new Scanner(System.in);
         File file = new File(saveFilePath);
-        String[] list = {};
 
         File[] fileNames = file.listFiles();
 
@@ -252,7 +236,7 @@ public class Console implements screens {
                 "*                                                                       *\n"+
                 "*************************************************************************\n"+
                 "*                                                                       *");
-        ArrayList<String> validInputs = new ArrayList<String>();
+        ArrayList<String> validInputs = new ArrayList<>();
         for (File fileName : fileNames) {
 
             validInputs.add(fileName.getName().split("\\.")[0]);
@@ -281,7 +265,6 @@ public class Console implements screens {
             if (!(validInputs.contains(input[0])))
             {
                 System.out.println("\nInvalid choice");
-                try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
             }
         }
         loadHero(input);
@@ -316,7 +299,6 @@ public class Console implements screens {
     }
     @Override
     public void MoveMenu(){
-//        Scanner scan = new Scanner(System.in);
         clearScreen();
 
         System.out.println("*************************************************************************\n"+
@@ -331,16 +313,36 @@ public class Console implements screens {
                  "*                                                                       *\n"+
                  "*************************************************************************\n"+
                  "*                                                                       *\n"+
-                 "*          You are on level "+Level+" Which direction do you want to go        *\n"+
+                 "*          You are on level "+Level+" Which direction do you want to go         *\n"+
                  "*      (1)North          (2)East          (3)South          (4)West     *\n"+
                  "*                                                                       *\n"+
                  "*      (B)Back                                                          *\n"+
                  "*                                                                       *\n"+
                  "*************************************************************************\n");
-        Move move = new Move();
+//        Move move = new Move();
+
         System.out.println("this is before "+Coordinates[0]+Coordinates[1]);
-        Coordinates = move.Direction(Coordinates);
-        System.out.println("this is After "+Coordinates[0]+Coordinates[1]);
+        String data = Move.Direction(Coordinates, Level);
+        while(!data.equals("B")){
+            System.out.println("(1)North          (2)East          (3)South          (4)West "+
+                    "(B)Back");
+            Random rand = new Random();
+            int chance = rand.nextInt(1000);
+            boolean Fight = chance > 800;
+            System.out.println("this is After "+Coordinates[0]+Coordinates[1]);
+            switch (data) {
+                case "1", "2", "3", "4" -> {
+                    if (Fight) {
+                        EnemyEncountered(Coordinates);
+                    } else {
+                        System.out.println(Arrays.toString(Coordinates));
+                        data = Move.Direction(Coordinates, Level);
+                    }
+                }
+                case "LevelUp" -> NewLevel();
+            }
+        }
+        ContinueMenu();
     }
     @Override
     public void EnemyEncountered(int[] tempCor){
@@ -348,6 +350,7 @@ public class Console implements screens {
         clearScreen();
         Coordinates = tempCor;
         Random ran = new Random();
+        String outcome;
         int chance = ran.nextInt(100);
         boolean Fight = chance > 50;
         Stats stat = new Stats();
@@ -368,27 +371,42 @@ public class Console implements screens {
                 "*                                                                       *\n"+
                 "*      Enemy encountered!!!! Do you want to fight him or try to run?    *\n"+
                 "*          His stats are Atk: "+stat.getAtk()+" Def: "+stat.getDef()+" Dodge: "+stat.getDodge()+"                      *\n"+
+                "* Your stats for "+CharacterName+" who's a "+className+" with HP:"+Hp+" Atk: "+Atk+" Def: "+Def+" Dodge: "+Dodge+"*\n"+
                 "*          (1)Fight                              (2)Run                 *\n"+
                 "*                                                                       *\n"+
                 "*           (B)Back                                                     *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
         switch (scan.nextLine()){
-            case "1" -> result.Fight();
+            case "1" -> {
+                outcome = result.Battle(Hp, Atk, Def, Dodge, Level);
+                if (outcome.equals("won"))
+                    FightWon();
+                if (outcome.equals("lost"))
+                    FightLost();
+            }
             case "2" -> {
-//
-//                System.out.println("this is before "+Coordinates[0]+Coordinates[1]);
                 if (Fight)
-                    MoveMenu();
-                else
-                    result.Fight();
+                    RanAway();
+                else {
+                    RunFail();
+                }
             }
             case "B" -> StartMenu();
         }
     }
     @Override
     public void FightWon(){
-
+        Stats stat = new Stats();
+        Exp += 20;
+        String up = stat.LevelUp(Exp, Level);
+        if (up.equals("LeveledUp")) {
+            Hp = 100;
+            Atk += stat.getAtk();
+            Dodge += stat.getDodge();
+            Def += stat.getDef();
+            Exp += stat.getExp();
+        }
         clearScreen();
 
         System.out.println("*************************************************************************\n"+
@@ -402,14 +420,21 @@ public class Console implements screens {
                 "*   *****        *           *        *  *      *    **** *     *       *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n"+
-                "*                                                                       *\n"+
-                "*                  Great job, you won the fight                         *\n"+
+                "*                                                                       *\n");
+        if(up.equals("LeveledUp")){System.out.println("your exp leveled up and new stats are HP:"+Hp+" Atk: "+Atk+" Dodge: "+Dodge+" Def: "+Def);}
+                System.out.println("*                  Great job, you won the fight                         *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
+        if (up.equals("Highest"))
+            System.out.println("You cant Level up more because you on your highest level");
+        try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
+        ItemDropped();
     }
     @Override
     public void FightLost(){
-
+        Coordinates[0] = 0;
+        Coordinates[1] = 0;
+        Hp = 100;
         clearScreen();
 
         System.out.println("*************************************************************************\n"+
@@ -428,12 +453,19 @@ public class Console implements screens {
                 "*     You will lose all your exp and items gained in this level         *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
+        try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
+        StartMenu();
     }
     @Override
     public void ItemDropped(){
-
+        Scanner scan = new Scanner(System.in);
+        Stats check = new Stats();
+        String drop = check.RandomE();
+        check.Equipment(drop);
+        int tatk = check.getAtk();
+        int tdef = check.getDef();
+        int tdodge = check.getDodge();
         clearScreen();
-
         System.out.println("*************************************************************************\n"+
                 "*                                                                       *\n"+
                 "*   *****  *           *           *  *  *      *    ****   *       *   *\n"+
@@ -446,10 +478,25 @@ public class Console implements screens {
                 "*                                                                       *\n"+
                 "*************************************************************************\n"+
                 "*                                                                       *\n"+
-                "*     Oh the enemy dropped an item??????????. do you wanna keep it?     *\n"+
+                "*     Oh the enemy dropped "+drop+" with Atk: "+tatk+" Def: "+tdef+" Dodge: "+tdodge+". do you wanna keep it?     *\n"+
                 "*     (1)Keep                              (2)Leave                     *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
+        if (scan.nextLine().equals("1")){
+            if(drop.equals("Helm"))
+                Helm = drop;
+            if (drop.equals("Armour"))
+                Armour = drop;
+            if (drop.equals("Weapon"))
+                Weapon = drop;
+            Atk += tatk;
+            Def += tdef;
+            Dodge += tdodge;
+            MoveMenu();
+        }
+        if (scan.nextLine().equals("2"))
+            MoveMenu();
+
     }
     @Override
     public void RanAway(){
@@ -471,6 +518,8 @@ public class Console implements screens {
                 "*     You successfully ran away. That was either smart or shameful      *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
+        try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
+        MoveMenu();
     }
     @Override
     public void RunFail(){
@@ -492,12 +541,23 @@ public class Console implements screens {
                 "*            You weren't fast enough and was forced to fight            *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
+        Fight result = new Fight();
+        String outcome = result.Battle(Hp, Atk, Def, Dodge, Level);
+        try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
+        if (outcome.equals("won")) {
+            Hp = result.getTmpHp();
+            FightWon();
+        }
+        if (outcome.equals("lost"))
+            FightLost();
     }
     @Override
     public void NewLevel(){
 
         clearScreen();
-
+        Coordinates[0] = 0;
+        Coordinates[1] = 0;
+        Hp = 100;
         System.out.println("*************************************************************************\n"+
                 "*                                                                       *\n"+
                 "*   *****  *           *           *  *  *      *    ****   *       *   *\n"+
@@ -514,6 +574,12 @@ public class Console implements screens {
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
         Level += 1;
+        saveData();
+        if (Level == 6){
+            System.out.println("Congrats on winning the game. You will be returned to Main Menu");
+            StartMenu();
+        }
+        try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
         MoveMenu();
     }
     @Override
@@ -583,7 +649,7 @@ public class Console implements screens {
     public void saveData(){
 
         File file = new File(saveFilePath.concat(PlayerName).concat(".txt"));
-
+        System.out.println(className+"  "+CharacterName+"  "+Level+"  "+Exp+"  "+Dodge+"  "+Atk+"  "+Def+"  "+Hp+"  "+Helm+"  "+Armour+"  "+Weapon);
         try {
             FileWriter writer = new FileWriter(file);
             writer.append(
@@ -623,52 +689,58 @@ public class Console implements screens {
                         .concat(name[0])
                         .concat(".txt")
         );
-
+        PlayerName = name[0];
         try {
             Scanner scanner = new Scanner(file);
             System.out.println(file);
-            className = scanner.nextLine();
+            setClassName(scanner.nextLine());
             System.out.println(className);
-            scanner.nextLine();
-            Level = Integer.parseInt(scanner.nextLine());
+            setCharacterName(scanner.nextLine());
+            System.out.println(CharacterName);
+            setLevel(Integer.parseInt(scanner.nextLine()));
             System.out.println(Level);
-            Exp = Integer.parseInt(scanner.nextLine());
+            if (Level == 6) {
+                System.out.println("Sorry this Character has already finished the game");
+                scanner.close();
+                StartMenu();
+            }
+            setExp(Integer.parseInt(scanner.nextLine()));
             System.out.println(Exp);
-            Dodge = Integer.parseInt(scanner.nextLine());
+            setDodge(Integer.parseInt(scanner.nextLine()));
             System.out.println(Dodge);
-            Atk = Integer.parseInt(scanner.nextLine());
+            setAtk(Integer.parseInt(scanner.nextLine()));
             System.out.println(Atk);
-            Def = Integer.parseInt(scanner.nextLine());
+            setDef(Integer.parseInt(scanner.nextLine()));
             System.out.println(Def);
-            Hp = Integer.parseInt(scanner.nextLine());
+            setHp(Integer.parseInt(scanner.nextLine()));
             System.out.println(Hp);
 
-            Helm = scanner.nextLine();
+            setHelm(scanner.nextLine());
             System.out.println(Helm);
-            stat.Equipmant(Helm);
-            Atk = Atk + stat.getAtk();
+            stat.Equipment(Helm);
+            setAtk(Atk + stat.getAtk());
             System.out.println(Atk);
-            Def = Def + stat.getDef();
+            setDef(Def + stat.getDef());
             System.out.println(Def);
-            Dodge = Dodge + stat.getDodge();
+            setDodge(Dodge + stat.getDodge());
             System.out.println(Dodge);
 
-            Armour = scanner.nextLine();
-            stat.Equipmant(Armour);
-            Atk = Atk + stat.getAtk();
+            setArmour(scanner.nextLine());
+            stat.Equipment(Armour);
+            setAtk(Atk + stat.getAtk());
             System.out.println(Atk);
-            Def = Def + stat.getDef();
+            setDef(Def + stat.getDef());
             System.out.println(Def);
-            Dodge = Dodge + stat.getDodge();
+            setDodge(Dodge + stat.getDodge());
             System.out.println(Dodge);
 
-            Weapon = scanner.nextLine();
-            stat.Equipmant(Weapon);
-            Atk = Atk + stat.getAtk();
+            setWeapon(scanner.nextLine());
+            stat.Equipment(Weapon);
+            setAtk(Atk + stat.getAtk());
             System.out.println(Atk);
-            Def = Def + stat.getDef();
+            setDef(Def + stat.getDef());
             System.out.println(Def);
-            Dodge = Dodge + stat.getDodge();
+            setDodge(Dodge + stat.getDodge());
             System.out.println(Dodge);
 
             scanner.close();

@@ -7,78 +7,45 @@ import za.co.WeThinkCode_.swingy.view.Console;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Level;
 
-public class Move {
-    Scanner scan = new Scanner(System.in);
-    Console direction = new Console();
-//    int[] Coordinates = direction.getCoordinates();
-    int map = (direction.getLevel()-1)*5+10-(direction.getLevel()%2);
+public class Move extends Console{
+//    Console direction = new Console();
+//    int[] Coordinates = direction.Coordinates();
 
-    public int[] Direction(int[] Coordinates){
 
+    public static String Direction(int[] Coordinates, int Level){
+        Scanner scan = new Scanner(System.in);
+        int map = (Level-1)*5+10-(Level%2);
+        String data = scan.nextLine();
         while(!(Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map* -1)) || (Coordinates[1] >= map)) {
-            switch (scan.nextLine()) {
+            switch (data) {
                 case "1" -> {
                     Coordinates[0] += 1;
-                    //direction.setCoordinates(this.Coordinates);
                     System.out.println("you moved north");
+                    return (data);
                 }
                 case "2" -> {
                     Coordinates[1] += 1;
-//                    direction.setCoordinates(this.Coordinates);
                     System.out.println("you moved east");
+                    return (data);
                 }
                 case "3" -> {
                     Coordinates[0] -= 1;
-//                    direction.setCoordinates(this.Coordinates);
                     System.out.println("you moved south");
+                    return (data);
                 }
                 case "4" -> {
                     Coordinates[1] -= 1;
-//                    direction.setCoordinates(this.Coordinates);
                     System.out.println("you moved west");
+                    return (data);
                 }
-                case "B" -> direction.StartMenu();
+                case "B" -> {
+                    return (data);
+                }
             }
-            System.out.println(Arrays.toString(Coordinates));
-
-            Random rand = new Random();
-            int chance = rand.nextInt(1000);
-
-            boolean Fight = chance > 800;
-            if (Fight) {
-                direction.EnemyEncountered(Coordinates);
-            } else {
-                Direction(Coordinates);
-            }
-            direction.NewLevel();
+            System.out.println("Should level up now");
         }
-
-
-
-//        public void endRound(){
-//
-////            Coordinates[0] = 0;
-////            Coordinates[1] = 0;
-////
-////            if (Hp() <= 0){
-////                setHp(this.hpLevel);
-////                return false;
-////            } else {
-////                setHp(this.hpLevel);
-////                this.exp += (level * 100);
-////                if(this.exp >= (this.level * 1000 + ((level - 1) * (level - 1)) * 450)) {
-////                    levelUp();
-////                    return true;
-////                }else{
-////                    return false;
-////                }
-////            }
-//        }
-
-
-    return (Coordinates);
+        return"LevelUp";
     }
-
-
 }

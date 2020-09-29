@@ -58,8 +58,6 @@ public class Main {
 
         if (args.length == 1) {
             if (args[0].toLowerCase().equals("-gui") || args[0].toLowerCase().equals("-console")) {
-                //CreateDB db = new CreateDB();
-                //db.ListDB();
                 Run.Game(args[0].toLowerCase());
                 System.out.println("Works fine");
 

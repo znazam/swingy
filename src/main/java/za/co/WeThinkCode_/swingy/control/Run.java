@@ -16,12 +16,12 @@ public class Run {
 
         Console displayCon = new Console();
 
-//        Gui displayGui = new Gui();
+        Gui displayGui = new Gui();
 
 
         switch (gameView) {
             case "-console" -> displayCon.StartMenu();
-//            case "-gui" -> displayGui.StartMenu();
+            case "-gui" -> displayGui.StartMenu();
         }
     }
 }

@@ -1,0 +1,11 @@
+Necromancer
+lich
+1
+0
+30
+70
+30
+100
+Leather
+Leather
+Leather

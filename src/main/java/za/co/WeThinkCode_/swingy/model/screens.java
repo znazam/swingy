@@ -7,7 +7,6 @@ public interface screens {
     public abstract void SelectClass();
     public abstract void ClassName();
     public abstract void LoadGame();
-    public abstract void SelectChar();
     public abstract void MoveMenu();
     public abstract void EnemyEncountered(int[] tempCor);
     public abstract void FightWon();

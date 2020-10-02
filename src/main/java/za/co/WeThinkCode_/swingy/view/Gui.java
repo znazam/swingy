@@ -445,11 +445,6 @@ public class Gui implements screens {
     }
 
     @Override
-    public void SelectChar() {
-
-    }
-
-    @Override
     public void MoveMenu() {
         DirectionP = new JPanel();
         DirectionP.setBounds(250,350,300,150);

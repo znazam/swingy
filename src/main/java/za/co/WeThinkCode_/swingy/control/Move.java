@@ -6,9 +6,6 @@ import java.util.Scanner;
 
 
 public class Move extends Console{
-//    Console direction = new Console();
-//    int[] Coordinates = direction.Coordinates();
-
 
     public static String Direction(int[] Coordinates, int Level){
         Scanner scan = new Scanner(System.in);

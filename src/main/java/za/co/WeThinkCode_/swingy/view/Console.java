@@ -271,32 +271,7 @@ public class Console implements screens {
         MoveMenu();
 
     }
-    @Override
-    public void SelectChar(){
 
-        clearScreen();
-
-        System.out.println("*************************************************************************\n"+
-             "*                                                                       *\n"+
-             "*   *****  *           *           *  *  *      *    ****   *       *   *\n"+
-             "*  *     *  *         * *         *   *  * *    *  *      *  *     *    *\n"+
-             "*  *         *       *   *       *    *  *  *   *  *      *   *   *     *\n"+
-             "*   *****     *     *     *     *     *  *   *  *  *           * *      *\n"+
-             "*        *     *   *       *   *      *  *    * *  *   ****     *       *\n"+
-             "*  *     *      * *         * *       *  *     **   *     *     *       *\n"+
-             "*   *****        *           *        *  *      *    **** *     *       *\n"+
-             "*                                                                       *\n"+
-             "*************************************************************************\n"+
-             "*                                                                       *\n");
-
-//        while(){// loop through database to get the length and Characters names than pass it in as (i){
-//
-//             System.out.println("*           ("+i+") "+character+"                                          *\n"+);
-//        }
-        System.out.println("*           (B)Back                                                     *\n"+
-                "*                                                                       *\n"+
-                        "*************************************************************************\n");
-    }
     @Override
     public void MoveMenu(){
         clearScreen();

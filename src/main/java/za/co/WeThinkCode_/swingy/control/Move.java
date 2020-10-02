@@ -1,13 +1,9 @@
 package za.co.WeThinkCode_.swingy.control;
 
-import lombok.Builder;
-import za.co.WeThinkCode_.swingy.model.Var;
-import za.co.WeThinkCode_.swingy.view.Console;
 
-import java.util.Arrays;
-import java.util.Random;
+import za.co.WeThinkCode_.swingy.view.Console;
 import java.util.Scanner;
-import java.util.logging.Level;
+
 
 public class Move extends Console{
 //    Console direction = new Console();
@@ -43,9 +39,12 @@ public class Move extends Console{
                 case "B" -> {
                     return (data);
                 }
+                default -> {
+                    return(data);
+                }
             }
-            System.out.println("Should level up now");
         }
         return"LevelUp";
     }
+
 }

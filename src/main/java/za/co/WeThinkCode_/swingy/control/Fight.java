@@ -19,8 +19,8 @@ public class Fight{
         int enemyDef = enemyStat.getDef();
         int enemyDodge = enemyStat.getDodge();
         System.out.println(Hp+"  "+Atk+"   "+Def+"  "+Dodge+"   "+Level);
-        Hp += Def;
-        enemyHp += enemyDef;
+//        Hp += Def;
+//        enemyHp += enemyDef;
         while (enemyHp >= 0 && Hp >= 0){
             System.out.println("Problem is at hit random");
             hit = random.nextInt(200) < Dodge;
@@ -29,12 +29,18 @@ public class Fight{
             System.out.println("Problem is at if hit");
             if (hit){
                 System.out.println("this is enemyhp now: "+enemyHp);
-                enemyHp -= Atk;}
+                if (enemyDef >= 1)
+                    enemyDef -= Atk;
+                else
+                    enemyHp -= Atk;}
             else
             enemyHp -= 0;
             System.out.println("Problem is at miss if");
             if (miss){
-                Hp -= enemyAtk;
+                if (Def >= 1)
+                    Def -= enemyAtk;
+                else
+                    Hp -= enemyAtk;
                 System.out.println("this is hero hp now: "+Hp);}
             else Hp -= 0;
         }

@@ -58,7 +58,7 @@ public class Console implements screens {
             case 1 -> NewGame();
             case 2 -> LoadGame();
             case 3 -> QuitVerify();
-            default -> throw new IllegalStateException("Unexpected value: " + scan.nextInt());
+            default -> {System.out.println("Wrong input\n");StartMenu();}
         }
 
     }
@@ -89,7 +89,7 @@ public class Console implements screens {
             case 2 -> LoadGame();
             case 3 -> MoveMenu();
             case 4 -> QuitVerify();
-            default -> throw new IllegalStateException("Unexpected value: " + scan.nextInt());
+            default -> {System.out.println("Wrong input\n");ContinueMenu();}
         }
     }
     @Override
@@ -182,7 +182,7 @@ public class Console implements screens {
                 ClassName();}
             case "B" -> StartMenu();
             case "Q" -> QuitVerify();
-            default -> throw new IllegalStateException("Unexpected value: " + scan.nextLine());
+            default -> {System.out.println("Wrong input\n");SelectClass();}
         }
     }
     @Override
@@ -340,6 +340,7 @@ public class Console implements screens {
                     }
                 }
                 case "LevelUp" -> NewLevel();
+                default -> {System.out.println("Wrong input\n");MoveMenu();}
             }
         }
         ContinueMenu();
@@ -380,8 +381,10 @@ public class Console implements screens {
         switch (scan.nextLine()){
             case "1" -> {
                 outcome = result.Battle(Hp, Atk, Def, Dodge, Level);
-                if (outcome.equals("won"))
+                if (outcome.equals("won")) {
+                    Hp = result.getTmpHp();
                     FightWon();
+                }
                 if (outcome.equals("lost"))
                     FightLost();
             }
@@ -393,8 +396,12 @@ public class Console implements screens {
                 }
             }
             case "B" -> StartMenu();
+            default -> {System.out.println("Wrong input\n");EnemyEncountered(Coordinates);}
         }
     }
+
+
+//    carry on here
     @Override
     public void FightWon(){
         Stats stat = new Stats();
@@ -427,7 +434,7 @@ public class Console implements screens {
                 "*************************************************************************\n");
         if (up.equals("Highest"))
             System.out.println("You cant Level up more because you on your highest level");
-        try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
+        try { Thread.sleep(3000);} catch (InterruptedException ex) {ex.printStackTrace();}
         ItemDropped();
     }
     @Override
@@ -453,7 +460,7 @@ public class Console implements screens {
                 "*     You will lose all your exp and items gained in this level         *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
-        try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
+        try { Thread.sleep(3000);} catch (InterruptedException ex) {ex.printStackTrace();}
         StartMenu();
     }
     @Override
@@ -482,21 +489,26 @@ public class Console implements screens {
                 "*     (1)Keep                              (2)Leave                     *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
-        if (scan.nextLine().equals("1")){
-            if(drop.equals("Helm"))
-                Helm = drop;
-            if (drop.equals("Armour"))
-                Armour = drop;
-            if (drop.equals("Weapon"))
-                Weapon = drop;
-            Atk += tatk;
-            Def += tdef;
-            Dodge += tdodge;
-            MoveMenu();
-        }
-        if (scan.nextLine().equals("2"))
-            MoveMenu();
 
+        switch(scan.nextLine()) {
+            case "1" -> {
+                if (drop.equals("Helm"))
+                    Helm = drop;
+                if (drop.equals("Armour"))
+                    Armour = drop;
+                if (drop.equals("Weapon"))
+                    Weapon = drop;
+                Atk += tatk;
+                Def += tdef;
+                Dodge += tdodge;
+                MoveMenu();
+            }
+            case "2" -> MoveMenu();
+            default -> {
+                System.out.println("Wrong input\n");
+                ItemDropped();
+            }
+        }
     }
     @Override
     public void RanAway(){
@@ -518,7 +530,7 @@ public class Console implements screens {
                 "*     You successfully ran away. That was either smart or shameful      *\n"+
                 "*                                                                       *\n"+
                 "*************************************************************************\n");
-        try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
+        try { Thread.sleep(3000);} catch (InterruptedException ex) {ex.printStackTrace();}
         MoveMenu();
     }
     @Override
@@ -543,7 +555,7 @@ public class Console implements screens {
                 "*************************************************************************\n");
         Fight result = new Fight();
         String outcome = result.Battle(Hp, Atk, Def, Dodge, Level);
-        try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
+        try { Thread.sleep(3000);} catch (InterruptedException ex) {ex.printStackTrace();}
         if (outcome.equals("won")) {
             Hp = result.getTmpHp();
             FightWon();
@@ -579,7 +591,7 @@ public class Console implements screens {
             System.out.println("Congrats on winning the game. You will be returned to Main Menu");
             StartMenu();
         }
-        try { Thread.sleep(1000);} catch (InterruptedException ex) {ex.printStackTrace();}
+        try { Thread.sleep(3000);} catch (InterruptedException ex) {ex.printStackTrace();}
         MoveMenu();
     }
     @Override
@@ -608,6 +620,7 @@ public class Console implements screens {
         switch (scan.nextInt()){
             case 1 -> QuitGame();
             case 2 -> StartMenu();
+            default -> {System.out.println("Wrong input\n");QuitVerify();}
         }
     }
     @Override

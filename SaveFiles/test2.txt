@@ -1,10 +1,10 @@
-Assassin
+Necromancer
 something
-2
-20
+1
+0
+30
 70
-70
-60
+30
 100
 Leather
 Leather

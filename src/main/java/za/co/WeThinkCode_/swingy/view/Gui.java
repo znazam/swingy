@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -21,10 +22,10 @@ import java.util.Scanner;
 public class Gui implements screens {
 
     String saveFilePath = new File("").getAbsolutePath().concat("\\SaveFiles\\");
-    protected int Atk, Def,Dodge,Exp = 0;
+    protected int Atk,finish, Def,Dodge,Exp = 0;
     protected String className;
     @Size(min = 2, max = 10)
-    protected String PlayerName,CharacterName, Dir;
+    protected String PlayerName,CharacterName,Dir;
     protected int Level = 1;
     protected int Hp = 100;
     protected String Helm = "Leather";
@@ -32,16 +33,17 @@ public class Gui implements screens {
     protected String Weapon = "Leather";
     protected int[] Coordinates = {0,0};
     String outcome;
+    String Invalid = "";
 
-
+//    protected JEditorPane Dir;
     protected JFrame f = new JFrame();
-    protected JPanel p,EnemyP,OptionP,LoadFileP, ContinueP, CBackP,NameP, StartP, LoadP, SelectHeroP,ArcherP, TankP, NecromancerP, AssassinP, StartBackP, DirectionP;
-    protected JButton StartB,FightB,RunB, ContinueB,CBackB, NameB, LoadB, ArcherB, TankB, NecromancerB, AssassinB, StartBackB, NorthB, WestB, EastB, SouthB;
+    protected JPanel p,LevelP,CaughtP,RanP,LostP,ItemP,EnemyP,WonP,OptionP,LoadFileP, ContinueP, CBackP,NameP, StartP, LoadP, SelectHeroP,ArcherP, TankP, NecromancerP, AssassinP, StartBackP, DirectionP;
+    protected JButton StartB,DropB,LeaveB,FightB,RunB, ContinueB,CBackB, NameB, LoadB, ArcherB, TankB, NecromancerB, AssassinB, StartBackB, NorthB, WestB, EastB, SouthB;
     protected Container con;
     protected JLabel l = new JLabel("Swingy");
     protected Font TitleFont = new Font("Times New Roman", Font.PLAIN, 100);
     protected Font NormalFont = new Font("Times New Roman", Font.PLAIN, 30);
-    protected JTextArea NameT,EnemyT, DirectionT,SelectHeroT, ArcherT, TankT, NecromancerT, AssassinT;
+    protected JTextArea FinishT,NameT,InvalidT,LoadT,LevelT,CaughtT,RanT,LostT,DropT,WonT,EnemyT, DirectionT,SelectHeroT, ArcherT, TankT, NecromancerT, AssassinT;
     protected JTextField InputT, LoadFileT;
     protected view viewMenu = new view();
     protected boolean SetupWindow = false;
@@ -65,6 +67,7 @@ public class Gui implements screens {
         LoadP = new JPanel();
         LoadB = new JButton("Load");
         StartB = new JButton("Start");
+        FinishT = new JTextArea("Sorry you already finished the game with that Character");
 //        font = new Font("Times New Roman", font.PLAIN, 100);
         if(!SetupWindow) {
             f.setSize(1000, 600);
@@ -75,8 +78,13 @@ public class Gui implements screens {
             SetupWindow = true;
         }
 
+        FinishT.setBounds(0,0,800,100);
+        FinishT.setBackground(Color.black);
+        FinishT.setForeground(Color.red);
+        FinishT.setFont(NormalFont);
+        FinishT.setLineWrap(true);
 
-        p.setBounds(100, 100, 600, 150);
+        p.setBounds(100, 100, 800, 200);
         p.add(l);
         p.setBackground(Color.black);
 
@@ -93,6 +101,10 @@ public class Gui implements screens {
         LoadP.setBounds(400, 400, 200, 100);
         LoadP.setBackground(Color.black);
         LoadP.add(LoadB);
+        if (finish == 1) {
+            p.add(FinishT);
+            finish = 0;
+        }
 
         LoadB.setBackground(Color.black);
         LoadB.setForeground(Color.red);
@@ -182,7 +194,16 @@ public class Gui implements screens {
         StartB.setBackground(Color.black);
         StartB.setForeground(Color.red);
         StartB.setFont(NormalFont);
-        StartB.addActionListener(viewMenu);
+        StartB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                p.setVisible(false);
+                StartP.setVisible(false);
+                LoadP.setVisible(false);
+                ContinueP.setVisible(false);
+                MoveMenu();
+            }
+        });
         StartB.setFocusPainted(false);
 
         LoadP.setBounds(400, 400, 200, 100);
@@ -193,6 +214,16 @@ public class Gui implements screens {
         LoadB.setForeground(Color.red);
         LoadB.setFont(NormalFont);
         LoadB.setFocusPainted(false);
+        LoadB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                p.setVisible(false);
+                StartP.setVisible(false);
+                LoadP.setVisible(false);
+                ContinueP.setVisible(false);
+                LoadGame();
+            }
+        });
 
         con.add(p);
         con.add(StartP);
@@ -353,7 +384,64 @@ public class Gui implements screens {
         LoadFileP = new JPanel();
         File file = new File(saveFilePath);
 
+        LoadFileP = new JPanel();
+        LoadT = new JTextArea("Type the name of your saved file will enter match when right file was entered\n");
+        InputT = new JTextField(30);
+
+        InvalidT = new JTextArea(Invalid);
+        InvalidT.setBounds(100,50,600,100);
+        InvalidT.setBackground(Color.black);
+        InvalidT.setForeground(Color.red);
+        InvalidT.setFont(NormalFont);
+        InvalidT.setLineWrap(true);
+        LoadT.setBounds(50,50,600,100);
+        LoadT.setBackground(Color.black);
+        LoadT.setForeground(Color.red);
+        LoadT.setFont(NormalFont);
+        LoadT.setLineWrap(true);
+
+
+        LoadFileP.setBounds(50,50,900,900);
+        LoadFileP.setBackground(Color.black);
+        LoadFileP.add(LoadT);
+        LoadFileP.add(LoadFileT);
+        LoadFileP.add(InvalidT);
         File[] fileNames = file.listFiles();
+        ArrayList<String> validInputs = new ArrayList<>();
+        for (File fileName : fileNames) {
+
+            validInputs.add(fileName.getName().split("\\.")[0]);
+
+        }
+        for (String validInput : validInputs) {
+            LoadT.append("- "+validInput+"\n");
+            System.out.println("*- ".concat(validInput));
+        }
+
+        LoadFileT.addActionListener(e -> {
+            System.out.println("Came here ");
+            String[] input = {""};
+            input[0] = "";
+
+                System.out.println("entered while ");
+                input[0]  = LoadFileT.getText();
+
+                if (validInputs.contains(input[0]))
+                    {
+//                        LoadFileT.setText("");
+//                    System.out.println("entered if");
+//                    Invalid = "\nInvalid choice";
+//                    LoadFileP.setVisible(false);
+//                    LoadGame();
+                        LoadFileP.setVisible(false);
+                        loadHero(input);
+                        MoveMenu();
+                }
+
+            System.out.println("exit while ");
+        });
+
+        con.add(LoadFileP);
     }
 
     @Override
@@ -367,7 +455,7 @@ public class Gui implements screens {
         DirectionP.setBounds(250,350,300,150);
         DirectionP.setBackground(Color.black);
         DirectionP.setLayout(new GridLayout(5,1));
-        DirectionT = new JTextArea(Dir);
+        DirectionT = new JTextArea();
         DirectionT.setBounds(100,50,600,100);
         DirectionT.setBackground(Color.black);
         DirectionT.setForeground(Color.red);
@@ -398,23 +486,28 @@ public class Gui implements screens {
             Random rand = new Random();
             int chance = rand.nextInt(1000);
             boolean Fight = chance > 800;
-            System.out.println("this is After "+Coordinates[0]+Coordinates[1]);
             if (Fight) {
                 DirectionP.setVisible(false);
                 NameP.setVisible(false);
                 CBackP.setVisible(false);
                 EnemyEncountered(Coordinates);
-            } else {
-                while (!(Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map)) {
-                    Coordinates[0] += 1;
-                    Dir = "You moved north";
-                    DirectionP.setVisible(false);
-                    NameP.setVisible(false);
-                    CBackP.setVisible(false);
-                    MoveMenu();
-                }
             }
-            NewLevel();
+            if (!(Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map)) {
+                Coordinates[0] += 1;
+                System.out.println("this is After in north" + Coordinates[0] + Coordinates[1]);
+                DirectionT.append(Dir);
+//                DirectionP.setVisible(false);
+//                NameP.setVisible(false);
+//                CBackP.setVisible(false);
+//                MoveMenu();
+            }
+            if ((Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map))
+            {
+                DirectionP.setVisible(false);
+                NameP.setVisible(false);
+                CBackP.setVisible(false);
+                NewLevel();
+            }
         });
 
         SouthB.setBackground(Color.black);
@@ -430,17 +523,24 @@ public class Gui implements screens {
                 NameP.setVisible(false);
                 CBackP.setVisible(false);
                 EnemyEncountered(Coordinates);
-            } else {
-                while (!(Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map)) {
-                    Coordinates[0] -= 1;
-                    Dir = "You moved South";
-                    DirectionP.setVisible(false);
-                    NameP.setVisible(false);
-                    CBackP.setVisible(false);
-                    MoveMenu();
-                }
             }
-            NewLevel();
+            if (!(Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map)) {
+                Coordinates[0] -= 1;
+                System.out.println("this is After in South" + Coordinates[0] + Coordinates[1]);
+                Dir = "You moved South";
+                DirectionT.append(Dir);
+//                DirectionP.setVisible(false);
+//                NameP.setVisible(false);
+//                CBackP.setVisible(false);
+//                MoveMenu();
+            }
+            if ((Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map))
+            {
+                DirectionP.setVisible(false);
+                NameP.setVisible(false);
+                CBackP.setVisible(false);
+                NewLevel();
+            }
         });
 
         WestB.setBackground(Color.black);
@@ -456,17 +556,24 @@ public class Gui implements screens {
                 NameP.setVisible(false);
                 CBackP.setVisible(false);
                 EnemyEncountered(Coordinates);
-            } else {
-                while (!(Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map)) {
-                    Coordinates[1] += 1;
-                    Dir = "You moved West";
-                    DirectionP.setVisible(false);
-                    NameP.setVisible(false);
-                    CBackP.setVisible(false);
-                    MoveMenu();
-                }
             }
-            NewLevel();
+            if (!(Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map)) {
+                Coordinates[1] -= 1;
+                System.out.println("this is After in west" + Coordinates[0] + Coordinates[1]);
+                Dir = "You moved west";
+                DirectionT.append(Dir);
+//                DirectionP.setVisible(false);
+//                NameP.setVisible(false);
+//                CBackP.setVisible(false);
+//                MoveMenu();
+            }
+            if ((Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map))
+            {
+                DirectionP.setVisible(false);
+                NameP.setVisible(false);
+                CBackP.setVisible(false);
+                NewLevel();
+            }
         });
 
         EastB.setBackground(Color.black);
@@ -482,17 +589,24 @@ public class Gui implements screens {
                 NameP.setVisible(false);
                 CBackP.setVisible(false);
                 EnemyEncountered(Coordinates);
-            } else {
-                while (!(Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map)) {
-                    Coordinates[1] -= 1;
-                    Dir = "You moved East";
-                    DirectionP.setVisible(false);
-                    NameP.setVisible(false);
-                    CBackP.setVisible(false);
-                    MoveMenu();
-                }
             }
-            NewLevel();
+            if (!(Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map)) {
+                Coordinates[1] += 1;
+                System.out.println("this is After in East" + Coordinates[0] + Coordinates[1]);
+                Dir = "You moved East";
+                DirectionT.append(Dir);
+//                DirectionP.setVisible(false);
+//                NameP.setVisible(false);
+//                CBackP.setVisible(false);
+//                MoveMenu();
+            }
+            if ((Coordinates[0] >= map) || (Coordinates[0] <= (map * -1)) || (Coordinates[1] <= (map * -1)) || (Coordinates[1] >= map))
+            {
+                DirectionP.setVisible(false);
+                NameP.setVisible(false);
+                CBackP.setVisible(false);
+                NewLevel();
+            }
         });
 
         CBackP.setBounds(20,500, 70, 50);
@@ -502,7 +616,15 @@ public class Gui implements screens {
         CBackB.setBackground(Color.black);
         CBackB.setForeground(Color.RED);
         CBackB.setFont(NormalFont);
-        CBackB.addActionListener(viewMenu);
+        CBackB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DirectionP.setVisible(false);
+                NameP.setVisible(false);
+                CBackP.setVisible(false);
+                ContinueMenu();
+            }
+        });
 
 //        DirectionP.add(NameT);
         DirectionP.add(NorthB);
@@ -559,10 +681,18 @@ public class Gui implements screens {
         FightB.setFont(NormalFont);
         FightB.addActionListener(e -> {
             outcome = result.Battle(Hp, Atk, Def, Dodge, Level);
-            if (outcome.equals("won"))
+            if (outcome.equals("won")) {
+                Hp = result.getTmpHp();
+                OptionP.setVisible(false);
+                EnemyP.setVisible(false);
                 FightWon();
-            if (outcome.equals("lost"))
+            }
+            if (outcome.equals("lost")) {
+                OptionP.setVisible(false);
+                EnemyP.setVisible(false);
                 FightLost();
+            }
+
         });
         FightB.setFocusPainted(false);
 
@@ -573,10 +703,14 @@ public class Gui implements screens {
         RunB.setFont(NormalFont);
         RunB.setFocusPainted(false);
         RunB.addActionListener(e -> {
-            if (Fight)
+            OptionP.setVisible(false);
+            EnemyP.setVisible(false);
+            if (Fight) {
                 RanAway();
-            else
+            }
+            else {
                 RunFail();
+            }
         });
 
         con.add(EnemyP);
@@ -585,33 +719,222 @@ public class Gui implements screens {
 
     @Override
     public void FightWon() {
+        Stats stat = new Stats();
+        Exp += 50;
+        String up = stat.LevelUp(Exp, Level);
+        if (up.equals("LeveledUp")) {
+            Hp = 100;
+            Atk += stat.getAtk();
+            Dodge += stat.getDodge();
+            Def += stat.getDef();
+            Exp += stat.getExp();
+        }
 
+        WonP = new JPanel();
+        WonP.setBounds(0,0,1000,300);
+        WonP.setBackground(Color.black);
+        if(up.equals("LeveledUp")){
+            WonT = new JTextArea("your exp leveled up and new stats are HP:"+Hp+" Atk: "+Atk+" Dodge: "+Dodge+" Def: "+Def+"\n Great job on winning the fight");
+        }
+        else if (up.equals("Highest"))
+            WonT = new JTextArea("You cant Level up more because you on your highest level");
+        else
+            WonT = new JTextArea("Great job on winning the fight");
+        WonT.setBounds(50,50,1000,300);
+        WonT.setBackground(Color.black);
+        WonT.setForeground(Color.red);
+        WonT.setFont(NormalFont);
+        WonT.setLineWrap(true);
+        WonP.add(WonT);
+
+        try { Thread.sleep(3000);} catch (InterruptedException ex) {ex.printStackTrace();}
+
+            cpfw();
+
+        con.add(WonP);
     }
 
+    void cpfw(){WonP.setVisible(false);
+        ItemDropped();}
     @Override
     public void ItemDropped() {
+        Stats check = new Stats();
+        String drop = check.RandomE();
+        check.Equipment(drop);
+        int tatk = check.getAtk();
+        int tdef = check.getDef();
+        int tdodge = check.getDodge();
 
+
+
+
+        ItemP = new JPanel();
+        ItemP.setBounds(0,0,1000,300);
+        ItemP.setBackground(Color.black);
+        DropT = new JTextArea("Oh the enemy dropped "+drop+" with Atk: "+tatk+" Def: "+tdef+" Dodge: "+tdodge+". do you wanna keep it?");
+        DropT.setBounds(50,50,1000,300);
+        DropT.setBackground(Color.black);
+        DropT.setForeground(Color.red);
+        DropT.setFont(NormalFont);
+        DropT.setLineWrap(true);
+        DropB = new JButton("Take");
+        LeaveB = new JButton("Leave");
+        ItemP.add(DropT);
+
+
+        OptionP = new JPanel();
+        OptionP.setBounds(100,400,300,150);
+        OptionP.setBackground(Color.black);
+        OptionP.setLayout(new GridLayout(2,1));
+        OptionP.add(DropB);
+        OptionP.add(LeaveB);
+
+
+        DropB.setBackground(Color.black);
+        DropB.setForeground(Color.red);
+        DropB.setFont(NormalFont);
+        DropB.addActionListener(e -> {
+            OptionP.setVisible(false);
+            ItemP.setVisible(false);
+            if(drop.equals("Helm"))
+                Helm = drop;
+            if (drop.equals("Armour"))
+                Armour = drop;
+            if (drop.equals("Weapon"))
+                Weapon = drop;
+            Atk += tatk;
+            Def += tdef;
+            Dodge += tdodge;
+            MoveMenu();
+
+        });
+        DropB.setFocusPainted(false);
+
+
+
+        LeaveB.setBackground(Color.black);
+        LeaveB.setForeground(Color.red);
+        LeaveB.setFont(NormalFont);
+        LeaveB.setFocusPainted(false);
+        LeaveB.addActionListener(e -> {
+            OptionP.setVisible(false);
+            ItemP.setVisible(false);
+            MoveMenu();
+        });
+
+        con.add(ItemP);
+        con.add(OptionP);
     }
 
     @Override
     public void FightLost() {
+        Coordinates[0] = 0;
+        Coordinates[1] = 0;
+        Hp = 100;
+
+        LostP = new JPanel();
+        LostP.setBounds(0,0,1000,300);
+        LostP.setBackground(Color.black);
+        LostT = new JTextArea("Oh no, you were defeated\nYou will lose all your exp and items gained in this level");
+        LostT.setBounds(50,50,1000,300);
+        LostT.setBackground(Color.black);
+        LostT.setForeground(Color.red);
+        LostT.setFont(NormalFont);
+        LostT.setLineWrap(true);
+        LostP.add(LostT);
+
+        try { Thread.sleep(3000);} catch (InterruptedException ex) {ex.printStackTrace();}
+            cpfl();
+        con.add(LostP);
 
     }
 
+    void   cpfl(){LostP.setVisible(false);
+        StartMenu();}
     @Override
     public void RanAway() {
+        RanP = new JPanel();
+        RanP.setBounds(0,0,1000,300);
+        RanP.setBackground(Color.black);
+        RanT = new JTextArea("You successfully ran away. That was either smart or shameful");
+        RanT.setBounds(50,50,1000,300);
+        RanT.setBackground(Color.black);
+        RanT.setForeground(Color.red);
+        RanT.setFont(NormalFont);
+        RanT.setLineWrap(true);
+        RanP.add(RanT);
 
+        try { Thread.sleep(3000);} catch (InterruptedException ex) {ex.printStackTrace();}
+
+            cpra();
+        con.add(RanP);
     }
 
+    void cpra(){RanP.setVisible(false);
+        MoveMenu();}
     @Override
     public void RunFail() {
-
+        CaughtP = new JPanel();
+        CaughtP.setBounds(0,0,1000,300);
+        CaughtP.setBackground(Color.black);
+        CaughtT = new JTextArea("You weren't fast enough and was forced to fight");
+        CaughtT.setBounds(50,50,1000,300);
+        CaughtT.setBackground(Color.black);
+        CaughtT.setForeground(Color.red);
+        CaughtT.setFont(NormalFont);
+        CaughtT.setLineWrap(true);
+        CaughtP.add(CaughtT);
+//        try { Thread.sleep(10000);} catch (InterruptedException ex) {ex.printStackTrace();}
+//        CaughtP.setVisible(false);
+        Fight result = new Fight();
+        String outcome = result.Battle(Hp, Atk, Def, Dodge, Level);
+        try { Thread.sleep(3000);} catch (InterruptedException ex) {ex.printStackTrace();}
+        if (outcome.equals("won")) {
+            Hp = result.getTmpHp();
+            CaughtP.setVisible(false);
+            FightWon();
+        }
+        if (outcome.equals("lost")){
+            CaughtP.setVisible(false);
+            FightLost();}
+        con.add(CaughtP);
     }
 
     @Override
     public void NewLevel() {
+        Coordinates[0] = 0;
+        Coordinates[1] = 0;
+        Hp = 100;
+
+        LevelP = new JPanel();
+        LevelP.setBounds(0,0,1000,300);
+        LevelP.setBackground(Color.black);
+        Level += 1;
+        saveData();
+        if (Level == 6){
+            LevelT = new JTextArea("Congrats on winning the game. You will be returned to Main Menu");
+            LevelP.setVisible(false);
+            StartMenu();
+        }
+        else
+            LevelT = new JTextArea("Well done!!! You made it through the level");
+        LevelT.setBounds(50,50,1000,300);
+        LevelT.setBackground(Color.black);
+        LevelT.setForeground(Color.red);
+        LevelT.setFont(NormalFont);
+        LevelT.setLineWrap(true);
+        LevelP.add(LevelT);
+
+        try { Thread.sleep(3000);} catch (InterruptedException ex) {ex.printStackTrace();}
+
+            cpnl();
+
+        con.add(LevelP);
 
     }
+
+    void cpnl(){LevelP.setVisible(false);
+        MoveMenu();}
 
     @Override
     public void QuitVerify() {
@@ -686,7 +1009,7 @@ public class Gui implements screens {
             setLevel(Integer.parseInt(scanner.nextLine()));
             System.out.println(Level);
             if (Level == 6) {
-                System.out.println("Sorry this Character has already finished the game");
+                finish = 1;
                 scanner.close();
                 StartMenu();
             }
@@ -735,6 +1058,7 @@ public class Gui implements screens {
             e.printStackTrace();
         }
     }
+
     public class view implements ActionListener {
 
         @Override
@@ -767,6 +1091,7 @@ public class Gui implements screens {
                 setDef(stat.getDef());
                 setDodge(stat.getDodge());
                 System.out.println(getAtk() + " " + getDef() + " " + getDodge());
+                ClassName();
             }
             else if (TankB.equals(e.getSource())){
                 cpSC();
